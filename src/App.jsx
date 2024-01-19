@@ -21,7 +21,6 @@ function App() {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    console.log(reservedSeat);
 
     useEffect(() => {
         if (selectedDate) {
