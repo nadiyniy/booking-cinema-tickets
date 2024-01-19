@@ -13,7 +13,7 @@ function SelectDate({ handleDateChange, selectedDate }) {
     }, []);
 
     return (
-        <Box autoComplete="off" sx={{ minWidth: '200px', marginTop: '10px', marginBottom: '10px' }}>
+        <Box autoComplete="off" sx={{ minWidth: '200px', marginTop: '10px', marginBottom: '10px', height: '66px' }}>
             <TextField
                 color="secondary"
                 label="Select date"
@@ -23,7 +23,7 @@ function SelectDate({ handleDateChange, selectedDate }) {
                 fullWidth
             >
                 {date.map((item) => (
-                    <MenuItem value={item} key={item} aria-hidden="true">
+                    <MenuItem sx={{ padding: '0' }} value={item} key={item} aria-hidden="true">
                         <StyledLink to="session_list">{item}</StyledLink>
                     </MenuItem>
                 ))}

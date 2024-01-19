@@ -3,11 +3,18 @@ import React from 'react';
 import { Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-function ConfirmSeat({ selectedSeat, onReservedSeat, error }) {
+function ConfirmSeat({ selectedSeat, onReservedSeat, error, isLoading }) {
     return (
         <>
             <h2>Selected Seat: {selectedSeat}</h2>
-            <Button variant="contained" type="button" onClick={onReservedSeat} endIcon={<DoneIcon />}>
+
+            <Button
+                variant="contained"
+                type="button"
+                onClick={onReservedSeat}
+                endIcon={<DoneIcon />}
+                disabled={isLoading}
+            >
                 Reserved Seat
             </Button>
             {error && (
@@ -25,6 +32,7 @@ ConfirmSeat.propTypes = {
     selectedSeat: PropTypes.string,
     onReservedSeat: PropTypes.func.isRequired,
     error: PropTypes.string,
+    isLoading: PropTypes.bool.isRequired,
 };
 
 ConfirmSeat.defaultProps = {

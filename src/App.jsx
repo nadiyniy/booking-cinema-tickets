@@ -7,6 +7,7 @@ import SessionList from './components/SessionList/SessionList.jsx';
 import Home from './components/Home/Home.jsx';
 import ModalSeatList from './components/ModalSeatList/ModalSeatList.jsx';
 import Layout from './components/Layout/Layout.jsx';
+import PageLoader from './components/PageLoader/PageLoader.jsx';
 
 function App() {
     const [selectedDate, setSelectedDate] = useState('');
@@ -18,11 +19,17 @@ function App() {
     const [confirmSeat, setConfirmSeat] = useState(null);
     const [errorSeat, setErrorSeat] = useState(null);
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    console.log(reservedSeat);
 
     useEffect(() => {
         if (selectedDate) {
-            getSessions().then((data) => setSessions(data.sessions));
+            setIsLoading(true);
+
+            getSessions()
+                .then((data) => setSessions(data.sessions))
+                .finally(() => setIsLoading(false));
         } else {
             navigate('/');
         }
@@ -30,24 +37,28 @@ function App() {
 
     useEffect(() => {
         if (selectedSession) {
-            getSessionDetails().then((data) => setSeats(data.seats));
+            setIsLoading(true);
+            getSessionDetails()
+                .then((data) => setSeats(data.seats))
+                .finally(() => setIsLoading(false));
         }
     }, [selectedSession]);
 
-    const onReservedSeat = () => {
-        const body = JSON.stringify({
-            session: selectedSession,
-            seat: selectedSeat,
-        });
-
+    const onReservedSeat = async () => {
         if (reservedSeat.includes(selectedSeat)) {
             setErrorSeat('This seat is already reserved.');
         } else {
-            getReservationsSeat(body).then((data) => {
+            try {
+                setIsLoading(true);
+                const data = await getReservationsSeat();
                 setConfirmSeat(data.message);
                 setReservedSeat([...reservedSeat, selectedSeat]);
                 setErrorSeat(null);
-            });
+            } catch (error) {
+                setErrorSeat(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
     const handleDateChange = (event) => {
@@ -73,6 +84,7 @@ function App() {
         setOpen(true);
     };
     const handleClose = () => {
+        setErrorSeat(null);
         setOpen(false);
         navigate('/');
     };
@@ -84,15 +96,19 @@ function App() {
                 <Route
                     path="/session_list"
                     element={
-                        selectedDate && (
-                            <Container>
-                                <SessionList
-                                    handleClickOpen={handleClickOpen}
-                                    selectedDate={selectedDate}
-                                    sessions={sessions}
-                                    handleSessionClick={handleSessionClick}
-                                />
-                            </Container>
+                        isLoading ? (
+                            <PageLoader />
+                        ) : (
+                            selectedDate && (
+                                <Container>
+                                    <SessionList
+                                        handleClickOpen={handleClickOpen}
+                                        selectedDate={selectedDate}
+                                        sessions={sessions}
+                                        handleSessionClick={handleSessionClick}
+                                    />
+                                </Container>
+                            )
                         )
                     }
                 />
@@ -101,6 +117,7 @@ function App() {
                     element={
                         selectedSession && (
                             <ModalSeatList
+                                isLoading={isLoading}
                                 confirmSeat={confirmSeat}
                                 selectedSeat={selectedSeat}
                                 onReservedSeat={onReservedSeat}
