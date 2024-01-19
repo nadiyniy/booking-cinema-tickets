@@ -1,14 +1,20 @@
+import DoneIcon from '@mui/icons-material/Done';
 import React from 'react';
+import { Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function ConfirmSeat({ selectedSeat, onReservedSeat, error }) {
     return (
         <>
             <h2>Selected Seat: {selectedSeat}</h2>
-            <button type="button" onClick={onReservedSeat}>
+            <Button variant="contained" type="button" onClick={onReservedSeat} endIcon={<DoneIcon />}>
                 Reserved Seat
-            </button>
-            {error && <p>{error}</p>}
+            </Button>
+            {error && (
+                <Typography variant="h4" color="red">
+                    {error}
+                </Typography>
+            )}
         </>
     );
 }

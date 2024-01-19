@@ -1,17 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { experimentalStyled as styled } from '@mui/material/styles';
 
 function SessionList({ selectedDate, sessions, handleSessionClick }) {
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
     return (
         <>
-            <h2>Sessions for {selectedDate}</h2>
-            <ul>
+            <Typography
+                sx={{ marginTop: '20px', marginBottom: '20px' }}
+                align="center"
+                variant="h2"
+                className="session-list-tittle"
+            >
+                Sessions for {selectedDate}
+            </Typography>
+
+            <Grid component="ul" container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {sessions.map((session) => (
-                    <li key={session} onClick={() => handleSessionClick(session)} aria-hidden="true">
-                        {session}
-                    </li>
+                    <Grid component="li" item xs={2} sm={4} md={4} key={session}>
+                        <Item key={session} sx={{ cursor: 'pointer' }} onClick={() => handleSessionClick(session)}>
+                            {session}
+                        </Item>
+                    </Grid>
                 ))}
-            </ul>
+            </Grid>
         </>
     );
 }

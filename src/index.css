@@ -104,6 +104,11 @@ section {
 body {
     font-family: 'Manrope', sans-serif;
     box-sizing: border-box;
+    background-image: url('./images/home.jpg');
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 20px;
+    height: 100vh;
 }
 ol,
 ul {
