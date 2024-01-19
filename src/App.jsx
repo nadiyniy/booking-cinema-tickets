@@ -1,13 +1,12 @@
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
-import { AppBar, Container, Toolbar } from '@mui/material';
+import { Container } from '@mui/material';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
-import SelectDate from './components/SelectDate/SelectDate.jsx';
 import SessionList from './components/SessionList/SessionList.jsx';
-import CinemaLogo from './images/cinema-logo1.svg';
 import Home from './components/Home/Home.jsx';
-// import Div from './StyleApp.jsx';
 import ModalSeatList from './components/ModalSeatList/ModalSeatList.jsx';
+import Layout from './components/Layout/Layout.jsx';
 
 function App() {
     const [selectedDate, setSelectedDate] = useState('');
@@ -19,10 +18,13 @@ function App() {
     const [confirmSeat, setConfirmSeat] = useState(null);
     const [errorSeat, setErrorSeat] = useState(null);
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (selectedDate) {
             getSessions().then((data) => setSessions(data.sessions));
+        } else {
+            navigate('/');
         }
     }, [selectedDate]);
 
@@ -72,45 +74,51 @@ function App() {
     };
     const handleClose = () => {
         setOpen(false);
+        navigate('/');
     };
 
     return (
-        <>
-            <AppBar position="static">
-                <Container>
-                    <Toolbar sx={{ justifyContent: 'space-between', color: 'peach' }}>
-                        <img src={CinemaLogo} alt="logo" width="150" />
-                        <SelectDate handleDateChange={handleDateChange} selectedDate={selectedDate} />
-                    </Toolbar>
-                </Container>
-            </AppBar>
-            {!selectedDate && <Home />}
-            {selectedDate && (
-                <Container>
-                    <SessionList
-                        handleClickOpen={handleClickOpen}
-                        selectedDate={selectedDate}
-                        sessions={sessions}
-                        handleSessionClick={handleSessionClick}
-                    />
-                </Container>
-            )}
-            {selectedSession && (
-                <ModalSeatList
-                    confirmSeat={confirmSeat}
-                    selectedSeat={selectedSeat}
-                    onReservedSeat={onReservedSeat}
-                    errorSeat={errorSeat}
-                    open={open}
-                    handleClose={handleClose}
-                    handleClickOpen={handleClickOpen}
-                    setSelectedSeat={setSelectedSeat}
-                    selectedSession={selectedSession}
-                    seats={seats}
-                    handleSeatClick={handleSeatClick}
+        <Routes>
+            <Route path="/" element={<Layout handleDateChange={handleDateChange} selectedDate={selectedDate} />}>
+                <Route index element={<Home />} />
+                <Route
+                    path="/session_list"
+                    element={
+                        selectedDate && (
+                            <Container>
+                                <SessionList
+                                    handleClickOpen={handleClickOpen}
+                                    selectedDate={selectedDate}
+                                    sessions={sessions}
+                                    handleSessionClick={handleSessionClick}
+                                />
+                            </Container>
+                        )
+                    }
                 />
-            )}
-        </>
+                <Route
+                    path="/session_details"
+                    element={
+                        selectedSession && (
+                            <ModalSeatList
+                                confirmSeat={confirmSeat}
+                                selectedSeat={selectedSeat}
+                                onReservedSeat={onReservedSeat}
+                                errorSeat={errorSeat}
+                                open={open}
+                                handleClose={handleClose}
+                                handleClickOpen={handleClickOpen}
+                                setSelectedSeat={setSelectedSeat}
+                                selectedSession={selectedSession}
+                                seats={seats}
+                                handleSeatClick={handleSeatClick}
+                            />
+                        )
+                    }
+                />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
     );
 }
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, MenuItem, TextField } from '@mui/material';
 import { getDate } from '../../services/api';
+import StyledLink from './StyleSelectDate';
 
 function SelectDate({ handleDateChange, selectedDate }) {
     const [date, setDate] = useState([]);
@@ -23,7 +24,7 @@ function SelectDate({ handleDateChange, selectedDate }) {
             >
                 {date.map((item) => (
                     <MenuItem value={item} key={item} aria-hidden="true">
-                        {item}
+                        <StyledLink to="session_list">{item}</StyledLink>
                     </MenuItem>
                 ))}
             </TextField>

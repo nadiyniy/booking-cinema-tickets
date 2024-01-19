@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Div = styled.div`
-    /* height: 90%; */
     .home-summary {
         margin-bottom: 50px;
     }

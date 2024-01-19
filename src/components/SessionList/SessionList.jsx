@@ -4,6 +4,7 @@ import { Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import StyledLink from '../SelectDate/StyleSelectDate';
 
 function SessionList({ selectedDate, sessions, handleSessionClick }) {
     const Item = styled(Paper)(({ theme }) => ({
@@ -27,8 +28,12 @@ function SessionList({ selectedDate, sessions, handleSessionClick }) {
             <Grid component="ul" container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {sessions.map((session) => (
                     <Grid component="li" item xs={2} sm={4} md={4} key={session}>
-                        <Item key={session} sx={{ cursor: 'pointer' }} onClick={() => handleSessionClick(session)}>
-                            {session}
+                        <Item
+                            key={session}
+                            sx={{ cursor: 'pointer', padding: '0' }}
+                            onClick={() => handleSessionClick(session)}
+                        >
+                            <StyledLink to="/session_details">{session}</StyledLink>
                         </Item>
                     </Grid>
                 ))}
