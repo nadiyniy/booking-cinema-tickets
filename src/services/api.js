@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://demo9384132.mockable.io/';
+axios.defaults.baseURL = 'https://demo9384132.mockable.io/';
 
 export const getDate = async () => {
     const { data } = await axios.get('date');
