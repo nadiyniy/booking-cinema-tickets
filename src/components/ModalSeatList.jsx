@@ -18,6 +18,7 @@ function ModalSeatList({
     selectedSeat,
     onReservedSeat,
     errorSeat,
+    reservedSeat,
 }) {
     return (
         <Dialog maxWidth="md" fullWidth onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -41,13 +42,20 @@ function ModalSeatList({
                         <CloseIcon />
                     </IconButton>
                     <DialogContent dividers>
-                        <SeatList seats={seats} selectedSession={selectedSession} handleSeatClick={handleSeatClick} />
+                        <SeatList
+                            reservedSeat={reservedSeat}
+                            selectedSeat={selectedSeat}
+                            seats={seats}
+                            selectedSession={selectedSession}
+                            handleSeatClick={handleSeatClick}
+                        />
                     </DialogContent>
                     {selectedSeat && (
                         <DialogActions sx={{ flexDirection: 'column', gap: '10px' }}>
                             <ConfirmSeat
-                                isLoading={isLoading}
+                                reservedSeat={reservedSeat}
                                 selectedSeat={selectedSeat}
+                                isLoading={isLoading}
                                 onReservedSeat={onReservedSeat}
                                 error={errorSeat}
                             />
@@ -73,6 +81,7 @@ ModalSeatList.propTypes = {
     onReservedSeat: PropTypes.func.isRequired,
     errorSeat: PropTypes.string,
     isLoading: PropTypes.bool.isRequired,
+    reservedSeat: PropTypes.arrayOf(PropTypes.string),
 };
 
 ModalSeatList.defaultProps = {
@@ -83,4 +92,5 @@ ModalSeatList.defaultProps = {
     open: '',
     selectedSeat: '',
     errorSeat: '',
+    reservedSeat: [],
 };

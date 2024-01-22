@@ -1,23 +1,38 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { Container } from '@mui/material';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components/index.js';
 import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
+import { setSelectedDate, setSelectedSession, setSessions } from './redux/sessions/actions.js';
+import { selectAllSessions, selectDate, selectSessions } from './redux/sessions/selectors.js';
+import { setConfirmedSeat, setErrorSeat, setReservedSeats, setSeats, setSelectedSeat } from './redux/seats/actions.js';
+import {
+    selectConfirmSeat,
+    selectErrorSeat,
+    selectReservedSeat,
+    selectSeats,
+    selectSelectedSeat,
+} from './redux/seats/selectors.js';
 
 function App() {
-    const [selectedDate, setSelectedDate] = useState('');
-    const [sessions, setSessions] = useState([]);
-    const [selectedSession, setSelectedSession] = useState(null);
-    const [seats, setSeats] = useState([]);
-    const [selectedSeat, setSelectedSeat] = useState(null);
-    const [reservedSeat, setReservedSeat] = useState([]);
-    const [confirmSeat, setConfirmSeat] = useState(null);
-    const [errorSeat, setErrorSeat] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const sessions = useSelector(selectAllSessions);
+    const selectedDate = useSelector(selectDate);
+    const selectedSession = useSelector(selectSessions);
+    const seats = useSelector(selectSeats);
+    const selectedSeat = useSelector(selectSelectedSeat);
+    const reservedSeat = useSelector(selectReservedSeat);
+    const confirmSeat = useSelector(selectConfirmSeat);
+    const errorSeat = useSelector(selectErrorSeat);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +40,7 @@ function App() {
                 setIsLoading(true);
                 try {
                     const data = await getSessions();
-                    setSessions(data.sessions);
+                    dispatch(setSessions(data.sessions));
                 } finally {
                     setIsLoading(false);
                 }
@@ -44,7 +59,7 @@ function App() {
 
                 try {
                     const data = await getSessionDetails();
-                    setSeats(data.seats);
+                    dispatch(setSeats(data.seats));
                 } finally {
                     setIsLoading(false);
                 }
@@ -56,16 +71,16 @@ function App() {
 
     const onReservedSeat = async () => {
         if (reservedSeat.includes(selectedSeat)) {
-            setErrorSeat('This seat is already reserved.');
+            dispatch(setErrorSeat('This seat is already reserved.'));
         } else {
             try {
                 setIsLoading(true);
                 const data = await getReservationsSeat();
-                setConfirmSeat(data.message);
-                setReservedSeat([...reservedSeat, selectedSeat]);
-                setErrorSeat(null);
+                dispatch(setConfirmedSeat(data.message));
+                dispatch(setReservedSeats([...reservedSeat, selectedSeat]));
+                dispatch(setErrorSeat(null));
             } catch (error) {
-                setErrorSeat(error.message);
+                dispatch(setErrorSeat(error.message));
             } finally {
                 setIsLoading(false);
             }
@@ -73,22 +88,24 @@ function App() {
     };
 
     const handleDateChange = (event) => {
-        setSelectedSeat(null);
-        setConfirmSeat(null);
-        setReservedSeat([]);
-        setSelectedDate(event.target.value);
+        dispatch(setSelectedSeat(null));
+        dispatch(setConfirmedSeat(null));
+        dispatch(setReservedSeats([]));
+
+        dispatch(setSelectedDate(event.target.value));
     };
 
     const handleSessionClick = (session) => {
-        setSelectedSeat(null);
-        setConfirmSeat(null);
-        setReservedSeat([]);
-        setSelectedSession(session);
+        dispatch(setSelectedSeat(null));
+        dispatch(setConfirmedSeat(null));
+        dispatch(setReservedSeats([]));
+        dispatch(setSelectedSession(session));
+
         setOpen(true);
     };
 
     const handleSeatClick = (seat) => {
-        setSelectedSeat(seat);
+        dispatch(setSelectedSeat(seat));
     };
 
     const handleClickOpen = () => {
@@ -129,6 +146,7 @@ function App() {
                     element={
                         selectedSession && (
                             <ModalSeatList
+                                reservedSeat={reservedSeat}
                                 isLoading={isLoading}
                                 confirmSeat={confirmSeat}
                                 selectedSeat={selectedSeat}
