@@ -1,12 +1,13 @@
+/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
-import { getReservationsSeat, getSessionDetails, getSessions } from './services/api';
-import SelectDate from './components/SelectDate/SelectDate';
-import SessionList from './components/SessionList/SessionList';
-import SeatList from './components/SeatList/SeatList';
-import ConfirmSeat from './components/ConfirmSeat/ConfirmSeat';
+import { Container } from '@mui/material';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+
+import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components/index.js';
+import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
 
 function App() {
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState('');
     const [sessions, setSessions] = useState([]);
     const [selectedSession, setSelectedSession] = useState(null);
     const [seats, setSeats] = useState([]);
@@ -14,69 +15,137 @@ function App() {
     const [reservedSeat, setReservedSeat] = useState([]);
     const [confirmSeat, setConfirmSeat] = useState(null);
     const [errorSeat, setErrorSeat] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (selectedDate) {
-            getSessions().then((data) => setSessions(data.sessions));
-        }
+        const fetchData = async () => {
+            if (!selectedDate) navigate('/');
+
+            setIsLoading(true);
+            try {
+                const data = await getSessions();
+                setSessions(data.sessions);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
     }, [selectedDate]);
 
     useEffect(() => {
-        if (selectedSession) {
-            getSessionDetails().then((data) => setSeats(data.seats));
-        }
+        const fetchSessionDetails = async () => {
+            if (selectedSession) {
+                setIsLoading(true);
+
+                try {
+                    const data = await getSessionDetails();
+                    setSeats(data.seats);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchSessionDetails();
     }, [selectedSession]);
 
-    const onReservedSeat = () => {
-        const body = JSON.stringify({
-            session: selectedSession,
-            seat: selectedSeat,
-        });
-
+    const onReservedSeat = async () => {
         if (reservedSeat.includes(selectedSeat)) {
             setErrorSeat('This seat is already reserved.');
         } else {
-            getReservationsSeat(body).then((data) => {
-                setConfirmSeat(data);
+            try {
+                setIsLoading(true);
+                const data = await getReservationsSeat();
+                setConfirmSeat(data.message);
                 setReservedSeat([...reservedSeat, selectedSeat]);
                 setErrorSeat(null);
-            });
+            } catch (error) {
+                setErrorSeat(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
+
     const handleDateChange = (event) => {
+        setSelectedSeat(null);
+        setConfirmSeat(null);
         setReservedSeat([]);
         setSelectedDate(event.target.value);
     };
 
     const handleSessionClick = (session) => {
+        setSelectedSeat(null);
+        setConfirmSeat(null);
+        setReservedSeat([]);
         setSelectedSession(session);
+        setOpen(true);
     };
 
     const handleSeatClick = (seat) => {
         setSelectedSeat(seat);
     };
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setErrorSeat(null);
+        setOpen(false);
+        navigate('/');
+    };
+
     return (
-        <div>
-            <h1>Cinema Ticket Reservation</h1>
-            <SelectDate handleDateChange={handleDateChange} selectedDate={selectedDate} />
-            {selectedDate && (
-                <SessionList selectedDate={selectedDate} sessions={sessions} handleSessionClick={handleSessionClick} />
-            )}
-            {selectedSession && (
-                <SeatList selectedSession={selectedSession} seats={seats} handleSeatClick={handleSeatClick} />
-            )}
-
-            {selectedSeat && (
-                <ConfirmSeat selectedSeat={selectedSeat} onReservedSeat={onReservedSeat} error={errorSeat} />
-            )}
-
-            {confirmSeat && !errorSeat && (
-                <div>
-                    <h2>{confirmSeat.message}</h2>
-                </div>
-            )}
-        </div>
+        <Routes>
+            <Route path="/" element={<Layout handleDateChange={handleDateChange} selectedDate={selectedDate} />}>
+                <Route index element={<Home />} />
+                <Route
+                    path="/session_list"
+                    element={
+                        isLoading ? (
+                            <PageLoader />
+                        ) : (
+                            selectedDate && (
+                                <Container>
+                                    <SessionList
+                                        handleClickOpen={handleClickOpen}
+                                        selectedDate={selectedDate}
+                                        sessions={sessions}
+                                        handleSessionClick={handleSessionClick}
+                                    />
+                                </Container>
+                            )
+                        )
+                    }
+                />
+                <Route
+                    path="/session_details"
+                    element={
+                        selectedSession && (
+                            <ModalSeatList
+                                isLoading={isLoading}
+                                confirmSeat={confirmSeat}
+                                selectedSeat={selectedSeat}
+                                onReservedSeat={onReservedSeat}
+                                errorSeat={errorSeat}
+                                open={open}
+                                handleClose={handleClose}
+                                handleClickOpen={handleClickOpen}
+                                setSelectedSeat={setSelectedSeat}
+                                selectedSession={selectedSession}
+                                seats={seats}
+                                handleSeatClick={handleSeatClick}
+                            />
+                        )
+                    }
+                />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
     );
 }
 
