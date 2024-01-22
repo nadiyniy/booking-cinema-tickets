@@ -105,7 +105,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-family: 'Manrope', sans-serif;
         box-sizing: border-box;
-        background-image: url(/public/home.jpg);
+        background-image: url(/home.jpg);
         background-position: center;
         background-size: cover;
         padding-bottom: 20px;

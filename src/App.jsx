@@ -21,14 +21,16 @@ function App() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!selectedDate) navigate('/');
-
-            setIsLoading(true);
-            try {
-                const data = await getSessions();
-                setSessions(data.sessions);
-            } finally {
-                setIsLoading(false);
+            if (selectedDate) {
+                setIsLoading(true);
+                try {
+                    const data = await getSessions();
+                    setSessions(data.sessions);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                navigate('/');
             }
         };
 
