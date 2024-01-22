@@ -20,24 +20,36 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (selectedDate) {
-            setIsLoading(true);
+        const fetchData = async () => {
+            if (!selectedDate) navigate('/');
 
-            getSessions()
-                .then((data) => setSessions(data.sessions))
-                .finally(() => setIsLoading(false));
-        } else {
-            navigate('/');
-        }
+            setIsLoading(true);
+            try {
+                const data = await getSessions();
+                setSessions(data.sessions);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
     }, [selectedDate]);
 
     useEffect(() => {
-        if (selectedSession) {
-            setIsLoading(true);
-            getSessionDetails()
-                .then((data) => setSeats(data.seats))
-                .finally(() => setIsLoading(false));
-        }
+        const fetchSessionDetails = async () => {
+            if (selectedSession) {
+                setIsLoading(true);
+
+                try {
+                    const data = await getSessionDetails();
+                    setSeats(data.seats);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchSessionDetails();
     }, [selectedSession]);
 
     const onReservedSeat = async () => {
@@ -57,6 +69,7 @@ function App() {
             }
         }
     };
+
     const handleDateChange = (event) => {
         setSelectedSeat(null);
         setConfirmSeat(null);
@@ -79,6 +92,7 @@ function App() {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
     const handleClose = () => {
         setErrorSeat(null);
         setOpen(false);
