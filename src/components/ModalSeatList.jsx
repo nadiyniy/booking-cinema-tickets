@@ -1,15 +1,11 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
+
+import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import ConfirmSeat from '../ConfirmSeat/ConfirmSeat';
-import SeatList from '../SeatList/SeatList';
-import PageLoader from '../PageLoader/PageLoader';
+
+import { ConfirmSeat, SeatList, PageLoader } from './index';
 
 function ModalSeatList({
     isLoading,

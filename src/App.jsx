@@ -2,12 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+
+import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components/index.js';
 import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
-import SessionList from './components/SessionList/SessionList.jsx';
-import Home from './components/Home/Home.jsx';
-import ModalSeatList from './components/ModalSeatList/ModalSeatList.jsx';
-import Layout from './components/Layout/Layout.jsx';
-import PageLoader from './components/PageLoader/PageLoader.jsx';
 
 function App() {
     const [selectedDate, setSelectedDate] = useState('');

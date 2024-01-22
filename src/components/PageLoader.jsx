@@ -1,6 +1,7 @@
 import React from 'react';
-import LoaderSpinner from '../LoaderSpinner/LoaderSpinner';
-import StyledPageLoader from './StyledPageLoader';
+
+import LoaderSpinner from './LoaderSpinner';
+import StyledPageLoader from '../styled/StyledPageLoader';
 
 function PageLoader() {
     return (

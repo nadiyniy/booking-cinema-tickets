@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+
+import { Typography, Paper, Grid } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import StyledLink from '../SelectDate/StyleSelectDate';
+
+import StyledLink from '../styled/StyleSelectDate';
 
 function SessionList({ selectedDate, sessions, handleSessionClick }) {
     const Item = styled(Paper)(({ theme }) => ({

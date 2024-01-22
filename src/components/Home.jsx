@@ -1,13 +1,15 @@
 /* eslint-disable no-unsafe-optional-chaining */
-import { Accordion, AccordionDetails, AccordionSummary, Container, Typography } from '@mui/material';
 import React from 'react';
+
+import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Div from './StyledHome';
 
 function Home() {
     return (
-        <Div>
-            <Container className="home-container">
+        <Box mb="50px">
+            <Container
+                sx={{ mt: '20px', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
+            >
                 <Typography variant="h1">Cinema Plus</Typography>
 
                 <Typography variant="body1" className="home-summary">
@@ -64,7 +66,7 @@ function Home() {
                     </AccordionDetails>
                 </Accordion>
             </Container>
-        </Div>
+        </Box>
     );
 }
 

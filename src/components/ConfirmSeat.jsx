@@ -1,7 +1,8 @@
-import DoneIcon from '@mui/icons-material/Done';
 import React from 'react';
-import { Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+
+import { Button, Typography } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 
 function ConfirmSeat({ selectedSeat, onReservedSeat, error, isLoading }) {
     return (

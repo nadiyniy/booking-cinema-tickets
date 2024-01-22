@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+
+import { Paper, Grid, Box } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 function SeatList({ seats, handleSeatClick }) {
@@ -13,6 +12,7 @@ function SeatList({ seats, handleSeatClick }) {
         textAlign: 'center',
         color: theme.palette.text.secondary,
     }));
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid component="ul" container spacing={{ xs: 2, md: 2 }} columns={{ xs: 6 }}>

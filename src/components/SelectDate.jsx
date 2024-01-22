@@ -1,9 +1,11 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { Box, MenuItem, TextField } from '@mui/material';
-import { getDate } from '../../services/api';
-import StyledLink from './StyleSelectDate';
+
+import { getDate } from '../services/api';
+import StyledLink from '../styled/StyleSelectDate';
 
 function SelectDate({ handleDateChange, selectedDate }) {
     const [date, setDate] = useState([]);
