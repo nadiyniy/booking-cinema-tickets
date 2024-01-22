@@ -11,6 +11,9 @@ function SeatList({ seats, handleSeatClick }) {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        '&:hover': {
+            backgroundColor: theme.palette.mode === 'dark' ? '#33404d' : '#f5f5f5',
+        },
     }));
 
     return (
