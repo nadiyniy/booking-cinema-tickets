@@ -11,7 +11,6 @@ import { getReservationsSeat, getSessionDetails, getSessions } from './services/
 import {
     setSelectedDate,
     setSelectedSession,
-    setSessions,
     selectAllSessions,
     selectDate,
     selectSessions,
@@ -50,7 +49,7 @@ function App() {
                 setIsLoading(true);
                 try {
                     const data = await getSessions();
-                    dispatch(setSessions(data.sessions));
+                    dispatch({ type: 'LOAD_SESSIONS', payload: data.sessions });
                 } finally {
                     setIsLoading(false);
                 }
