@@ -8,16 +8,26 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components/index.js';
 import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
-import { setSelectedDate, setSelectedSession, setSessions } from './redux/sessions/actions.js';
-import { selectAllSessions, selectDate, selectSessions } from './redux/sessions/selectors.js';
-import { setConfirmedSeat, setErrorSeat, setReservedSeats, setSeats, setSelectedSeat } from './redux/seats/actions.js';
 import {
+    setSelectedDate,
+    setSelectedSession,
+    setSessions,
+    selectAllSessions,
+    selectDate,
+    selectSessions,
+} from './redux/ducks/sessions.js';
+import {
+    setConfirmedSeat,
+    setErrorSeat,
+    setReservedSeats,
+    setSeats,
+    setSelectedSeat,
     selectConfirmSeat,
     selectErrorSeat,
     selectReservedSeat,
     selectSeats,
     selectSelectedSeat,
-} from './redux/seats/selectors.js';
+} from './redux/ducks/seats.js';
 
 function App() {
     const [open, setOpen] = useState(false);

@@ -2,8 +2,8 @@
 import { combineReducers, createStore } from 'redux';
 import { devToolsEnhancer } from '@redux-devtools/extension';
 
-import sessionReducer from './sessions/reducer';
-import seatReducer from './seats/reducer';
+import sessionReducer from './ducks/sessions';
+import seatReducer from './ducks/seats';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
