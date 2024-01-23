@@ -1,4 +1,3 @@
-/* eslint-disable default-param-last */
 const SET_SELECTED_DATE = 'SET_SELECTED_DATE';
 const SET_SELECTED_SESSION = 'SET_SELECTED_SESSION';
 const SET_SESSIONS = 'SET_SESSIONS';
@@ -6,7 +5,7 @@ const SET_SESSIONS = 'SET_SESSIONS';
 const initialState = {
     sessions: [],
     selectedDate: '',
-    selectedSession: null,
+    selectedSession: '',
     error: null,
     isLoading: false,
 };

@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +6,7 @@ import { Box, MenuItem, TextField } from '@mui/material';
 import { getDate } from '../services/api';
 import { StyledLink } from '../styled/GlobalStyles';
 
-function SelectDate({ handleDateChange, selectedDate }) {
+const SelectDate = ({ handleDateChange, selectedDate }) => {
     const [date, setDate] = useState([]);
 
     useEffect(() => {
@@ -32,7 +31,7 @@ function SelectDate({ handleDateChange, selectedDate }) {
             </TextField>
         </Box>
     );
-}
+};
 
 export default SelectDate;
 

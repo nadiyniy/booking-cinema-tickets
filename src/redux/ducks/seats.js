@@ -1,4 +1,3 @@
-/* eslint-disable default-param-last */
 const SET_SELECTED_SEAT = 'SET_SELECTED_SEAT';
 const SET_RESERVED_SEATS = 'SET_RESERVED_SEATS';
 const SET_CONFIRMED_SEAT = 'SET_CONFIRMED_SEAT';
@@ -6,9 +5,9 @@ const SET_ERROR_SEAT = 'SET_ERROR_SEAT';
 const SET_SEATS = 'SET_SEATS';
 
 const initialState = {
-    selectedSeat: null,
+    selectedSeat: '',
     reservedSeats: [],
-    confirmedSeat: null,
+    confirmedSeat: '',
     errorSeat: null,
     seats: [],
 };

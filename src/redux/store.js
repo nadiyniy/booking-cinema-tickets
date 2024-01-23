@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from './ducks/sessions';
