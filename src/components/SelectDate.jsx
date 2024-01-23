@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/button-has-type */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, MenuItem, TextField } from '@mui/material';
 
-import { getDate } from '../services/api';
 import { StyledLink } from '../styled/GlobalStyles';
+import { selectSessionsDate } from '../redux/ducks/sessions';
 
 const SelectDate = ({ handleDateChange, selectedDate }) => {
-    const [date, setDate] = useState([]);
+    const dispatch = useDispatch();
+    const date = useSelector(selectSessionsDate);
 
     useEffect(() => {
-        getDate().then((data) => setDate(data.date));
+        dispatch({ type: 'LOAD_DATE' });
     }, []);
 
     return (
