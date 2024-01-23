@@ -12,7 +12,7 @@ function Layout({ handleDateChange, selectedDate }) {
         <>
             <AppBar position="static">
                 <Container>
-                    <Toolbar sx={{ justifyContent: 'space-between', color: 'peach' }}>
+                    <Toolbar sx={{ justifyContent: 'space-between' }}>
                         <Link to="/">
                             <img src="/cinema-logo.svg" alt="logo" width="150" />
                         </Link>

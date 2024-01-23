@@ -83,6 +83,7 @@ function App() {
                 dispatch(setErrorSeat(error.message));
             } finally {
                 setIsLoading(false);
+                dispatch(setSelectedSeat(null));
             }
         }
     };

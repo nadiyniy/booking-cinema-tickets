@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import StyledLoader from '../styled/StyledLoaderSpinner';
+import StyledLoader from '../styled/LoaderSpinnerStyled';
 
 function LoaderSpinner() {
     return (

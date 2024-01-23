@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import RootTheme from './RootTheme';
 
 const StyledLoader = styled.div`
     .lds-default {
@@ -12,7 +13,7 @@ const StyledLoader = styled.div`
         position: absolute;
         width: 6px;
         height: 6px;
-        background: black;
+        background: ${RootTheme.colors.primaryBlack};
         border-radius: 50%;
         animation: lds-default 1.2s linear infinite;
     }

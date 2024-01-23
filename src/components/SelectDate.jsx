@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Box, MenuItem, TextField } from '@mui/material';
 
 import { getDate } from '../services/api';
-import StyledLink from '../styled/StyleSelectDate';
+import { StyledLink } from '../styled/GlobalStyles';
 
 function SelectDate({ handleDateChange, selectedDate }) {
     const [date, setDate] = useState([]);

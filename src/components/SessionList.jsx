@@ -1,23 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Typography, Paper, Grid } from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
+import { Typography, Grid } from '@mui/material';
 
-import StyledLink from '../styled/StyleSelectDate';
+import { StyledLink } from '../styled/GlobalStyles';
+import SessionListItem from '../styled/SessionListStyled';
 
 function SessionList({ selectedDate, sessions, handleSessionClick }) {
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-        '&:hover': {
-            backgroundColor: theme.palette.mode === 'dark' ? '#33404d' : '#f5f5f5',
-        },
-    }));
-
     return (
         <>
             <Typography
@@ -32,13 +21,13 @@ function SessionList({ selectedDate, sessions, handleSessionClick }) {
             <Grid component="ul" container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {sessions.map((session) => (
                     <Grid component="li" item xs={2} sm={4} md={4} key={session}>
-                        <Item
+                        <SessionListItem
                             key={session}
                             sx={{ cursor: 'pointer', padding: '0' }}
                             onClick={() => handleSessionClick(session)}
                         >
                             <StyledLink to="/session_details">{session}</StyledLink>
-                        </Item>
+                        </SessionListItem>
                     </Grid>
                 ))}
             </Grid>

@@ -50,18 +50,21 @@ function ModalSeatList({
                             handleSeatClick={handleSeatClick}
                         />
                     </DialogContent>
-                    {selectedSeat && (
-                        <DialogActions sx={{ flexDirection: 'column', gap: '10px' }}>
-                            <ConfirmSeat
-                                reservedSeat={reservedSeat}
-                                selectedSeat={selectedSeat}
-                                isLoading={isLoading}
-                                onReservedSeat={onReservedSeat}
-                                error={errorSeat}
-                            />
-                            {confirmSeat && !errorSeat && <Typography variant="h4">{confirmSeat}</Typography>}
-                        </DialogActions>
-                    )}
+                    <DialogActions
+                        sx={{ flexDirection: 'column', gap: '10px', minHeight: '150px', justifyContent: 'start' }}
+                    >
+                        <ConfirmSeat
+                            reservedSeat={reservedSeat}
+                            selectedSeat={selectedSeat}
+                            onReservedSeat={onReservedSeat}
+                            error={errorSeat}
+                        />
+                        {confirmSeat && !errorSeat && (
+                            <Typography variant="h4">
+                                {reservedSeat} {confirmSeat}
+                            </Typography>
+                        )}
+                    </DialogActions>
                 </>
             )}
         </Dialog>
