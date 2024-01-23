@@ -7,7 +7,7 @@ import { Container } from '@mui/material';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components/index.js';
-import { getReservationsSeat, getSessionDetails, getSessions } from './services/api.js';
+import { getSessions } from './services/api.js';
 import {
     setSelectedDate,
     setSelectedSession,
@@ -19,7 +19,6 @@ import {
     setConfirmedSeat,
     setErrorSeat,
     setReservedSeats,
-    setSeats,
     setSelectedSeat,
     selectConfirmSeat,
     selectErrorSeat,
@@ -67,8 +66,7 @@ function App() {
                 setIsLoading(true);
 
                 try {
-                    const data = await getSessionDetails();
-                    dispatch(setSeats(data.seats));
+                    dispatch({ type: 'LOAD_SEAT' });
                 } finally {
                     setIsLoading(false);
                 }
@@ -84,30 +82,29 @@ function App() {
         } else {
             try {
                 setIsLoading(true);
-                const data = await getReservationsSeat();
-                dispatch(setConfirmedSeat(data.message));
+                dispatch({ type: 'LOAD_SEAT_R' });
                 dispatch(setReservedSeats([...reservedSeat, selectedSeat]));
                 dispatch(setErrorSeat(null));
             } catch (error) {
                 dispatch(setErrorSeat(error.message));
             } finally {
                 setIsLoading(false);
-                dispatch(setSelectedSeat(null));
+                dispatch(setSelectedSeat(''));
             }
         }
     };
 
     const handleDateChange = (event) => {
-        dispatch(setSelectedSeat(null));
-        dispatch(setConfirmedSeat(null));
+        dispatch(setSelectedSeat(''));
+        dispatch(setConfirmedSeat(''));
         dispatch(setReservedSeats([]));
 
         dispatch(setSelectedDate(event.target.value));
     };
 
     const handleSessionClick = (session) => {
-        dispatch(setSelectedSeat(null));
-        dispatch(setConfirmedSeat(null));
+        dispatch(setSelectedSeat(''));
+        dispatch(setConfirmedSeat(''));
         dispatch(setReservedSeats([]));
         dispatch(setSelectedSession(session));
 

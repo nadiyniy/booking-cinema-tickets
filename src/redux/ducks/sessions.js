@@ -36,12 +36,12 @@ export function* workerSessionDate() {
     const { date } = yield call(getDate);
     yield put({ type: GET_DATE_SUCCESS, payload: date });
 }
-export function* workerSessionSessions() {
+export function* workerSession() {
     const { sessions } = yield call(getSessions);
     yield put({ type: GET_SESSIONS_SUCCESS, payload: sessions });
 }
 export function* watchSession() {
-    yield all([takeLatest('LOAD_DATE', workerSessionDate), takeLatest('LOAD_SESSIONS', workerSessionSessions)]);
+    yield all([takeLatest('LOAD_DATE', workerSessionDate), takeLatest('LOAD_SESSIONS', workerSession)]);
 }
 export function* sessionSaga() {
     yield watchSession();

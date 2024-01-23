@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
 import sessionReducer, { sessionSaga } from './ducks/sessions';
-import seatReducer from './ducks/seats';
+import seatReducer, { seatSaga } from './ducks/seats';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,5 +18,6 @@ const store = configureStore({
 });
 
 sagaMiddleware.run(sessionSaga);
+sagaMiddleware.run(seatSaga);
 
 export default store;
