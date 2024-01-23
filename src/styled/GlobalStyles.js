@@ -1,6 +1,8 @@
-import { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+import RootTheme from './RootTheme';
 
-const GlobalStyles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
     html,
     body,
     div,
@@ -82,9 +84,9 @@ const GlobalStyles = createGlobalStyle`
     mark,
     audio,
     video {
-        margin: 0;
-        border: 0;
-        font-size: 100%;
+        margin: ${RootTheme.sizes.size_0};
+        border: ${RootTheme.sizes.size_0};
+        font-size: ${RootTheme.sizes.size_100};
         font: inherit;
         vertical-align: baseline;
         box-sizing: border-box;
@@ -105,21 +107,21 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-family: 'Manrope', sans-serif;
         box-sizing: border-box;
-        background-image: url(/public/home.jpg);
+        background-image: url(/home.jpg);
         background-position: center;
         background-size: cover;
-        padding-bottom: 20px;
-        height: 100vh;
+        padding-bottom: ${RootTheme.sizes.pixel_20};
+        height: ${RootTheme.sizes.size_100vh};
     }
     ol,
     ul {
         list-style: none;
-        padding: 0;
+        padding: ${RootTheme.sizes.size_0};
     }
     button {
         display: block;
         cursor: pointer;
-        padding: 0;
+        padding: ${RootTheme.sizes.size_0};
     }
 
     blockquote,
@@ -135,15 +137,23 @@ const GlobalStyles = createGlobalStyle`
     }
     table {
         border-collapse: collapse;
-        border-spacing: 0;
+        border-spacing: ${RootTheme.sizes.size_0};
     }
 
     img,
     svg {
         display: block;
-        max-width: 100%;
+        max-width: ${RootTheme.sizes.size_100};
         height: auto;
     }
+`;
+
+export const StyledLink = styled(Link)`
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: ${RootTheme.sizes.size_100};
+    padding: ${RootTheme.sizes.pixel_5} ${RootTheme.sizes.pixel_10};
 `;
 
 export default GlobalStyles;

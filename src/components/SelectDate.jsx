@@ -1,17 +1,19 @@
-/* eslint-disable no-unsafe-optional-chaining */
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/button-has-type */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, MenuItem, TextField } from '@mui/material';
 
-import { getDate } from '../services/api';
-import StyledLink from '../styled/StyleSelectDate';
+import { StyledLink } from '../styled/GlobalStyles';
+import { selectSessionsDate } from '../redux/ducks/sessions';
 
-function SelectDate({ handleDateChange, selectedDate }) {
-    const [date, setDate] = useState([]);
+const SelectDate = ({ handleDateChange, selectedDate }) => {
+    const dispatch = useDispatch();
+    const date = useSelector(selectSessionsDate);
 
     useEffect(() => {
-        getDate().then((data) => setDate(data.date));
+        dispatch({ type: 'LOAD_DATE' });
     }, []);
 
     return (
@@ -32,7 +34,7 @@ function SelectDate({ handleDateChange, selectedDate }) {
             </TextField>
         </Box>
     );
-}
+};
 
 export default SelectDate;
 
