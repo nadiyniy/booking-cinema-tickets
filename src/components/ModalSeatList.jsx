@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -69,28 +68,3 @@ const ModalSeatList = ({
 );
 
 export default ModalSeatList;
-
-ModalSeatList.propTypes = {
-    handleSeatClick: PropTypes.func.isRequired,
-    selectedSession: PropTypes.string,
-    seats: PropTypes.arrayOf(PropTypes.string),
-    confirmSeat: PropTypes.string,
-    handleClose: PropTypes.func,
-    open: PropTypes.bool,
-    selectedSeat: PropTypes.string,
-    onReservedSeat: PropTypes.func.isRequired,
-    errorSeat: PropTypes.string,
-    isLoading: PropTypes.bool.isRequired,
-    reservedSeat: PropTypes.arrayOf(PropTypes.string),
-};
-
-ModalSeatList.defaultProps = {
-    selectedSession: '',
-    seats: '',
-    confirmSeat: '',
-    handleClose: '',
-    open: '',
-    selectedSeat: '',
-    errorSeat: '',
-    reservedSeat: [],
-};

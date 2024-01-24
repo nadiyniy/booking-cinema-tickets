@@ -1,6 +1,5 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, MenuItem, TextField } from '@mui/material';
@@ -37,11 +36,3 @@ const SelectDate = ({ handleDateChange, selectedDate }) => {
 };
 
 export default SelectDate;
-
-SelectDate.propTypes = {
-    handleDateChange: PropTypes.func.isRequired,
-    selectedDate: PropTypes.string,
-};
-SelectDate.defaultProps = {
-    selectedDate: '',
-};

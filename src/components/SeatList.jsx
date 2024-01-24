@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Grid, Box } from '@mui/material';
 
@@ -26,16 +25,3 @@ const SeatList = ({ seats, handleSeatClick, reservedSeat, selectedSeat }) => (
 );
 
 export default SeatList;
-
-SeatList.propTypes = {
-    handleSeatClick: PropTypes.func.isRequired,
-    seats: PropTypes.arrayOf(PropTypes.string),
-    reservedSeat: PropTypes.arrayOf(PropTypes.string),
-    selectedSeat: PropTypes.string,
-};
-
-SeatList.defaultProps = {
-    seats: '',
-    reservedSeat: [],
-    selectedSeat: '',
-};

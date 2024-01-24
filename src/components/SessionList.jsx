@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Typography, Grid } from '@mui/material';
 
@@ -34,13 +33,3 @@ const SessionList = ({ selectedDate, sessions, handleSessionClick }) => (
 );
 
 export default SessionList;
-
-SessionList.propTypes = {
-    handleSessionClick: PropTypes.func.isRequired,
-    selectedDate: PropTypes.string.isRequired,
-    sessions: PropTypes.arrayOf(PropTypes.string),
-};
-
-SessionList.defaultProps = {
-    sessions: [],
-};

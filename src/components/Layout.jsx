@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { AppBar, Container, Toolbar } from '@mui/material';
 
@@ -25,14 +24,5 @@ const Layout = ({ handleDateChange, selectedDate }) => (
         </Container>
     </>
 );
-
-Layout.propTypes = {
-    selectedDate: PropTypes.string,
-    handleDateChange: PropTypes.func.isRequired,
-};
-
-Layout.defaultProps = {
-    selectedDate: '',
-};
 
 export default Layout;

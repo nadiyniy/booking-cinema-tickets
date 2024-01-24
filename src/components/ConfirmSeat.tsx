@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Button, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
@@ -28,14 +27,3 @@ const ConfirmSeat = ({ selectedSeat, onReservedSeat, error }: ConfirmSeatProps) 
 );
 
 export default ConfirmSeat;
-
-ConfirmSeat.propTypes = {
-    selectedSeat: PropTypes.string,
-    onReservedSeat: PropTypes.func.isRequired,
-    error: PropTypes.string,
-};
-
-ConfirmSeat.defaultProps = {
-    selectedSeat: '',
-    error: null,
-};
