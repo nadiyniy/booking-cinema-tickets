@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import RootTheme from '../styled/RootTheme';
+import { ConfirmSeatProps } from '../types/ConfirmSeat';
 
-const ConfirmSeat = ({ selectedSeat, onReservedSeat, error }) => (
+const ConfirmSeat = ({ selectedSeat, onReservedSeat, error }: ConfirmSeatProps) => (
     <>
         <h2>Selected Seat: {selectedSeat || 'chose seat'}</h2>
 
