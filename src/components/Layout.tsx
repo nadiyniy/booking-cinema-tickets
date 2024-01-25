@@ -6,7 +6,7 @@ import { AppBar, Container, Toolbar } from '@mui/material';
 import { PageLoader, SelectDate } from './index';
 import { LayoutProps } from '../types';
 
-const Layout = ({ handleDateChange, selectedDate }: LayoutProps) => (
+const Layout = ({ selectedDate }: LayoutProps) => (
     <>
         <AppBar position="static">
             <Container>
@@ -14,7 +14,7 @@ const Layout = ({ handleDateChange, selectedDate }: LayoutProps) => (
                     <Link to="/">
                         <img src="/cinema-logo.svg" alt="logo" width="150" />
                     </Link>
-                    <SelectDate handleDateChange={handleDateChange} selectedDate={selectedDate} />
+                    <SelectDate selectedDate={selectedDate} />
                 </Toolbar>
             </Container>
         </AppBar>

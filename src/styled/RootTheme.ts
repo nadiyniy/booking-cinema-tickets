@@ -6,7 +6,7 @@ const RootTheme = {
         primaryWhiteChoice: '#e3e0e0',
         primaryHover: '#33404d',
         primaryWhiteSelected: '#f5f5f5',
-        primaryRed: '#FF0000',
+        primaryRed: '#FF0000'
     },
     sizes: {
         size_100: '100%',
@@ -14,7 +14,7 @@ const RootTheme = {
         size_0: '0',
         pixel_5: '5px',
         pixel_10: '10px',
-        pixel_20: '20px',
-    },
+        pixel_20: '20px'
+    }
 };
 export default RootTheme;

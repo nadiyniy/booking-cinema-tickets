@@ -9,12 +9,12 @@ const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    seat: seatReducer,
+    seat: seatReducer
 });
 
 const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 });
 
 sagaMiddleware.run(sessionSaga);

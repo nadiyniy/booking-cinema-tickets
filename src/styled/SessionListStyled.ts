@@ -11,8 +11,8 @@ const SessionListItem = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? primaryHover : primaryWhiteSelected,
-    },
+        backgroundColor: theme.palette.mode === 'dark' ? primaryHover : primaryWhiteSelected
+    }
 }));
 
 export default SessionListItem;

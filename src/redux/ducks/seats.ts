@@ -9,7 +9,7 @@ enum SeatActionEnum {
     SET_ERROR_SEAT = 'SET_ERROR_SEAT',
     GET_SEATS = 'GET_SEATS',
     GET_SEATS_SUCCESS = 'GET_SEATS_SUCCESS',
-    GET_RESERVED_SUCCESS = 'GET_RESERVED_SUCCESS',
+    GET_RESERVED_SUCCESS = 'GET_RESERVED_SUCCESS'
 }
 const initialState: SeatState = {
     selectedSeat: '',
@@ -17,7 +17,7 @@ const initialState: SeatState = {
     confirmedSeat: '',
     errorSeat: null,
     seats: [],
-    isLoading: false,
+    isLoading: false
 };
 
 export default function reducer(state = initialState, action: any) {

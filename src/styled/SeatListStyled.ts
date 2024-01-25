@@ -17,12 +17,12 @@ const SeatListItem = styled(Paper)<SeatListStyledProps>(({ theme, reserved, sele
         textAlign: 'center',
         color: theme.palette.text.secondary,
         '&:hover': {
-            backgroundColor: theme.palette.mode === 'dark' ? primaryHover : primaryWhiteSelected,
+            backgroundColor: theme.palette.mode === 'dark' ? primaryHover : primaryWhiteSelected
         },
 
         ...(selected && {
-            backgroundColor: primaryWhiteSelected,
-        }),
+            backgroundColor: primaryWhiteSelected
+        })
     };
 });
 

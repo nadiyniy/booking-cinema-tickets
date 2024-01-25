@@ -5,16 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, MenuItem, TextField } from '@mui/material';
 
 import { StyledLink } from '../styled/GlobalStyles';
-import { selectSessionsDate } from '../redux/ducks/sessions';
+import { selectSessionsDate, setSelectedDate } from '../redux/ducks/sessions';
 import { SelectDateProps } from '../types';
+import { setConfirmedSeat, setReservedSeats, setSelectedSeat } from '../redux/ducks/seats';
 
-const SelectDate = ({ handleDateChange, selectedDate }: SelectDateProps) => {
+const SelectDate = ({ selectedDate }: SelectDateProps) => {
     const dispatch = useDispatch();
     const date = useSelector(selectSessionsDate);
 
     useEffect(() => {
-        dispatch({ type: 'LOAD_DATE' });
+        dispatch({ type: 'GET_DATE' });
     }, []);
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setSelectedSeat(''));
+        dispatch(setConfirmedSeat(''));
+        dispatch(setReservedSeats([]));
+        dispatch(setSelectedDate(event.target.value));
+        dispatch({ type: 'GET_SESSIONS' });
+    };
 
     return (
         <Box
