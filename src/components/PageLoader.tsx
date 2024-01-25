@@ -1,10 +1,10 @@
 import LoaderSpinner from './LoaderSpinner';
-import StyledPageLoader from '../styled/PageLoaderStyled';
+import { Container } from '@mui/material';
 
 const PageLoader = () => (
-    <StyledPageLoader>
+    <Container sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex', mt: '20px', mb: '20px' }}>
         <LoaderSpinner />
-    </StyledPageLoader>
+    </Container>
 );
 
 export default PageLoader;
