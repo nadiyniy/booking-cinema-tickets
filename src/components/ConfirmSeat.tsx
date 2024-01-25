@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { Button, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import RootTheme from '../styled/RootTheme';
-import { ConfirmSeatProps } from '../types/ConfirmSeat';
+import { ConfirmSeatProps } from '../types';
 
 const ConfirmSeat = ({ selectedSeat, onReservedSeat, error }: ConfirmSeatProps) => (
     <>
