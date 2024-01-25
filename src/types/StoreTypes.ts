@@ -4,6 +4,7 @@ export type SeatState = {
     confirmedSeat: string;
     errorSeat: string | null;
     seats: string[];
+    isLoading: boolean;
 };
 
 export type SessionState = {

@@ -63,7 +63,7 @@ function App() {
             if (selectedSession) {
                 setIsLoading(true);
                 try {
-                    dispatch({ type: 'LOAD_SEAT' });
+                    dispatch({ type: 'GET_SEATS' });
                 } catch {
                     console.error('Failed to fetch session details');
                 } finally {
@@ -148,7 +148,6 @@ function App() {
                         selectedSession && (
                             <ModalSeatList
                                 reservedSeat={reservedSeat}
-                                isLoading={isLoading}
                                 confirmSeat={confirmSeat}
                                 selectedSeat={selectedSeat}
                                 onReservedSeat={onReservedSeat}
