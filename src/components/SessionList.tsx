@@ -10,6 +10,7 @@ import { setConfirmedSeat, setReservedSeats, setSelectedSeat } from '../redux/du
 const SessionList = ({ selectedDate, setOpen }: SessionListProps) => {
     const sessions: string[] = useSelector(selectAllSessions);
     const dispatch = useDispatch();
+
     const handleSessionClick = (session: string) => {
         dispatch(setSelectedSeat(''));
         dispatch(setConfirmedSeat(''));

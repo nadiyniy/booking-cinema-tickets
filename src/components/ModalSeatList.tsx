@@ -25,43 +25,25 @@ const ModalSeatList = ({ open, setOpen }: ModalSeatListProps) => {
     const seats: string[] = useSelector(selectSeats);
     const confirmSeat: string = useSelector(selectConfirmSeat);
     const errorSeat: string | null = useSelector(selectErrorSeat);
-    const selectedSeat = useSelector(selectSelectedSeat);
-    const reservedSeat = useSelector(selectReservedSeat);
+    const selectedSeat: string = useSelector(selectSelectedSeat);
+    const reservedSeat: string[] = useSelector(selectReservedSeat);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchSessionDetails = async () => {
-            if (selectedSession) {
-                try {
-                    dispatch({ type: 'GET_SEATS' });
-                } catch {
-                    console.error('Failed to fetch session details');
-                }
-            }
-        };
-
-        fetchSessionDetails();
+        selectedSession && dispatch({ type: 'GET_SEATS' });
     }, [selectedSession]);
 
-    const onReservedSeat = async () => {
+    const onReservedSeat = () => {
         if (reservedSeat.includes(selectedSeat)) {
             dispatch(setErrorSeat('This seat is already reserved.'));
         } else {
-            try {
-                dispatch({ type: 'LOAD_SEAT_R' });
-                dispatch(setReservedSeats([...reservedSeat, selectedSeat]));
-                dispatch(setErrorSeat(null));
-            } catch (error: any) {
-                dispatch(setErrorSeat(error.message));
-            } finally {
-                dispatch(setSelectedSeat(''));
-            }
+            dispatch({ type: 'LOAD_SEAT_R' });
+            dispatch(setReservedSeats([...reservedSeat, selectedSeat]));
+            dispatch(setErrorSeat(null));
         }
-    };
-    const handleSeatClick = (seat: string) => {
-        dispatch(setSelectedSeat(seat));
+        dispatch(setSelectedSeat(''));
     };
 
     const handleClose = () => {
@@ -92,12 +74,7 @@ const ModalSeatList = ({ open, setOpen }: ModalSeatListProps) => {
                         <CloseIcon />
                     </IconButton>
                     <DialogContent dividers>
-                        <SeatList
-                            reservedSeat={reservedSeat}
-                            selectedSeat={selectedSeat}
-                            seats={seats}
-                            handleSeatClick={handleSeatClick}
-                        />
+                        <SeatList reservedSeat={reservedSeat} selectedSeat={selectedSeat} seats={seats} />
                     </DialogContent>
                     <DialogActions
                         sx={{ flexDirection: 'column', gap: '10px', minHeight: '150px', justifyContent: 'start' }}

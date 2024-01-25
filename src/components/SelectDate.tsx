@@ -16,6 +16,7 @@ const SelectDate = ({ selectedDate }: SelectDateProps) => {
     useEffect(() => {
         dispatch({ type: 'GET_DATE' });
     }, []);
+
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSelectedSeat(''));
         dispatch(setConfirmedSeat(''));
