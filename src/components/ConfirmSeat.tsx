@@ -5,7 +5,7 @@ import { ConfirmSeatProps } from '../types';
 
 const ConfirmSeat = ({ selectedSeat, onReservedSeat, error }: ConfirmSeatProps) => (
     <>
-        <h2>Selected Seat: {selectedSeat || 'chose seat'}</h2>
+        <h2 data-testid="ConfirmSeat-1">Selected Seat: {selectedSeat || 'chose seat'}</h2>
 
         <Button
             variant="contained"
