@@ -1,7 +1,7 @@
 export type SeatState = {
     selectedSeat: string;
     reservedSeats: string[];
-    confirmedSeat: string;
+    confirmedMessageSeat: string;
     errorSeat: string | null;
     seats: string[];
     isLoading: boolean;

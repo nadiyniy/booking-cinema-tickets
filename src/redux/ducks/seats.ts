@@ -15,7 +15,7 @@ enum SeatActionEnum {
 const initialState: SeatState = {
     selectedSeat: '',
     reservedSeats: [],
-    confirmedSeat: '',
+    confirmedMessageSeat: '',
     errorSeat: null,
     seats: [],
     isLoading: false
@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action: any) {
         case SeatActionEnum.SET_RESERVED_SEATS:
             return { ...state, reservedSeats: action.payload };
         case SeatActionEnum.SET_CONFIRMED_SEAT:
-            return { ...state, confirmedSeat: action.payload };
+            return { ...state, confirmedMessageSeat: action.payload };
         case SeatActionEnum.SET_ERROR_SEAT:
             return { ...state, errorSeat: action.payload };
         case SeatActionEnum.GET_SEATS:
@@ -36,7 +36,7 @@ export default function reducer(state = initialState, action: any) {
         case SeatActionEnum.GET_SEATS_SUCCESS:
             return { ...state, seats: action.payload, isLoading: false };
         case SeatActionEnum.GET_RESERVED_SUCCESS:
-            return { ...state, confirmedSeat: action.payload };
+            return { ...state, confirmedMessageSeat: action.payload };
         default:
             return state;
     }
@@ -65,6 +65,6 @@ export const setErrorSeat = (error: string | null) => ({ type: SeatActionEnum.SE
 export const selectSeats = (state: Store) => state.seat.seats;
 export const selectSelectedSeat = (state: Store) => state.seat.selectedSeat;
 export const selectReservedSeat = (state: Store) => state.seat.reservedSeats;
-export const selectConfirmSeat = (state: Store) => state.seat.confirmedSeat;
+export const selectConfirmSeat = (state: Store) => state.seat.confirmedMessageSeat;
 export const selectErrorSeat = (state: Store) => state.seat.errorSeat;
 export const selectIsLoading = (state: Store) => state.seat.isLoading;
