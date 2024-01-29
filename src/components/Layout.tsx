@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-
 import { AppBar, Container, Toolbar } from '@mui/material';
 
 import { PageLoader, SelectDate } from './index';
+
 import { LayoutProps } from '../types';
 
 const Layout = ({ selectedDate }: LayoutProps) => (

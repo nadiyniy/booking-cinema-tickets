@@ -1,9 +1,9 @@
+import { useDispatch } from 'react-redux';
 import { Grid, Box } from '@mui/material';
 
-import SeatListItem from '../styled/SeatListStyled';
-import { SeatListProps } from '../types';
-import { useDispatch } from 'react-redux';
 import { setSelectedSeat } from '../redux/ducks/seats';
+import { SeatListProps } from '../types';
+import SeatListItem from '../styled/SeatListStyled';
 
 const SeatList = ({ seats, reservedSeat, selectedSeat }: SeatListProps) => {
     const dispatch = useDispatch();

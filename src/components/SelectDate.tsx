@@ -1,13 +1,11 @@
-/* eslint-disable react/button-has-type */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Box, MenuItem, TextField } from '@mui/material';
 
-import { StyledLink } from '../styled/GlobalStyles';
 import { selectSessionsDate, setSelectedDate } from '../redux/ducks/sessions';
-import { SelectDateProps } from '../types';
 import { setConfirmedSeat, setReservedSeats, setSelectedSeat } from '../redux/ducks/seats';
+import { SelectDateProps } from '../types';
+import { StyledLink } from '../styled/GlobalStyles';
 
 const SelectDate = ({ selectedDate }: SelectDateProps) => {
     const dispatch = useDispatch();

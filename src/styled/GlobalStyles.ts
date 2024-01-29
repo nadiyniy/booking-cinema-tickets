@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import RootTheme from './RootTheme';
 
 export const GlobalStyles = createGlobalStyle`

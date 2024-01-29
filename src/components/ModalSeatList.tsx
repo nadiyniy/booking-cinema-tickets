@@ -1,10 +1,12 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 import { ConfirmSeat, SeatList, PageLoader } from './index';
-import { ModalSeatListProps } from '../types';
+
+import { selectSessions } from '../redux/ducks/sessions';
 import {
     selectConfirmSeat,
     selectErrorSeat,
@@ -16,8 +18,7 @@ import {
     setReservedSeats,
     setSelectedSeat
 } from '../redux/ducks/seats';
-import { selectSessions } from '../redux/ducks/sessions';
-import { useNavigate } from 'react-router-dom';
+import { ModalSeatListProps } from '../types';
 
 const ModalSeatList = ({ open, setOpen }: ModalSeatListProps) => {
     const isLoading: boolean = useSelector(selectIsLoading);

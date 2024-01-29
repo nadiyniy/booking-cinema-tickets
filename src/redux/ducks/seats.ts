@@ -1,4 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
+
 import { getReservationsSeat, getSessionDetails } from '../../services/api';
 import { SeatState, Store } from '../../types/StoreTypes';
 

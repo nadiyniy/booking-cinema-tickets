@@ -1,5 +1,6 @@
 import { Paper } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
+
 import RootTheme from './RootTheme';
 
 const { primary, primaryWhite, primaryHover, primaryWhiteSelected } = RootTheme.colors;

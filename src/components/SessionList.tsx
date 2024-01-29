@@ -1,11 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Grid, Container } from '@mui/material';
 
-import { StyledLink } from '../styled/GlobalStyles';
-import SessionListItem from '../styled/SessionListStyled';
-import { SessionListProps } from '../types';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectAllSessions, setSelectedSession } from '../redux/ducks/sessions';
 import { setConfirmedSeat, setReservedSeats, setSelectedSeat } from '../redux/ducks/seats';
+import { SessionListProps } from '../types';
+import { StyledLink } from '../styled/GlobalStyles';
+import SessionListItem from '../styled/SessionListStyled';
 
 const SessionList = ({ selectedDate, setOpen }: SessionListProps) => {
     const sessions: string[] = useSelector(selectAllSessions);

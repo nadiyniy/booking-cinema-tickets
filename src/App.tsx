@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { SessionList, PageLoader, Layout, ModalSeatList, Home } from './components';
+
 import { selectDate, selectIsLoading } from './redux/ducks/sessions.js';
 
 function App() {
