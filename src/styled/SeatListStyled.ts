@@ -1,5 +1,5 @@
 import { experimentalStyled as styled } from '@mui/material/styles';
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 import { SeatListStyledProps } from '../types/SeatListStyledTypes';
 import RootTheme from './RootTheme';
@@ -16,6 +16,7 @@ const SeatListItem = styled(Paper)<SeatListStyledProps>(({ theme, reserved, sele
         pointerEvents: reserved === 'true' ? 'none' : 'auto',
         padding: theme.spacing(2),
         textAlign: 'center',
+        cursor: 'pointer',
         color: theme.palette.text.secondary,
         '&:hover': {
             backgroundColor: theme.palette.mode === 'dark' ? primaryHover : primaryWhiteSelected
@@ -26,5 +27,9 @@ const SeatListItem = styled(Paper)<SeatListStyledProps>(({ theme, reserved, sele
         })
     };
 });
+
+export const BoxStyled = styled(Box)`
+    flex-grow: 1;
+`;
 
 export default SeatListItem;

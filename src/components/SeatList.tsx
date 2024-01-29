@@ -1,15 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { Grid, Box } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import { setSelectedSeat } from '../redux/ducks/seats';
 import { SeatListProps } from '../types';
-import SeatListItem from '../styled/SeatListStyled';
+import SeatListItem, { BoxStyled } from '../styled/SeatListStyled';
 
 const SeatList = ({ seats, reservedSeat, selectedSeat }: SeatListProps) => {
     const dispatch = useDispatch();
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <BoxStyled>
             <Grid component="ul" container spacing={{ xs: 2, md: 2 }} columns={{ xs: 6 }}>
                 {!!seats?.length &&
                     seats.map((seat) => (
@@ -18,7 +18,6 @@ const SeatList = ({ seats, reservedSeat, selectedSeat }: SeatListProps) => {
                                 selected={selectedSeat === seat}
                                 reserved={reservedSeat.includes(seat).toString()}
                                 key={seat}
-                                sx={{ cursor: 'pointer' }}
                                 onClick={() => dispatch(setSelectedSeat(seat))}
                             >
                                 {seat}
@@ -26,7 +25,7 @@ const SeatList = ({ seats, reservedSeat, selectedSeat }: SeatListProps) => {
                         </Grid>
                     ))}
             </Grid>
-        </Box>
+        </BoxStyled>
     );
 };
 

@@ -2,13 +2,10 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Typograp
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Home = () => (
-    <Box mb="50px">
-        <Container
-            sx={{ mt: '20px', height: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
-        >
+    <Box>
+        <Container>
             <Typography variant="h1">Cinema Plus</Typography>
-
-            <Typography variant="body1" className="home-summary">
+            <Typography variant="body1">
                 Welcome to Cinemate Tickets, your ultimate destination for a seamless and enjoyable movie-going
                 experience! At Cinemate Tickets, we`ve redefined the way you book tickets for the latest blockbusters.
                 Our user-friendly platform is designed to make the ticket booking process quick, convenient, and

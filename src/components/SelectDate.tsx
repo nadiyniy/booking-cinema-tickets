@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, MenuItem, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 import { selectSessionsDate, setSelectedDate } from '../redux/ducks/sessions';
 import { setConfirmedSeat, setReservedSeats, setSelectedSeat } from '../redux/ducks/seats';
 import { SelectDateProps } from '../types';
 import { StyledLink } from '../styled/GlobalStyles';
+import { BoxStyled, MenuItemStyled } from '../styled/SelectDateStyled';
 
 const SelectDate = ({ selectedDate }: SelectDateProps) => {
     const dispatch = useDispatch();
@@ -24,11 +25,7 @@ const SelectDate = ({ selectedDate }: SelectDateProps) => {
     };
 
     return (
-        <Box
-            component="form"
-            autoComplete="off"
-            sx={{ minWidth: '200px', marginTop: '10px', marginBottom: '10px', height: '66px' }}
-        >
+        <BoxStyled component="form">
             <TextField
                 color="secondary"
                 label="Select date"
@@ -38,12 +35,12 @@ const SelectDate = ({ selectedDate }: SelectDateProps) => {
                 fullWidth
             >
                 {date.map((item: string) => (
-                    <MenuItem sx={{ padding: '0' }} value={item} key={item} aria-hidden="true">
+                    <MenuItemStyled value={item} key={item} aria-hidden="true">
                         <StyledLink to="session_list">{item}</StyledLink>
-                    </MenuItem>
+                    </MenuItemStyled>
                 ))}
             </TextField>
-        </Box>
+        </BoxStyled>
     );
 };
 

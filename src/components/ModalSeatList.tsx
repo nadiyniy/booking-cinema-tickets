@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Typography, IconButton, DialogActions, DialogContent, DialogTitle, Dialog } from '@mui/material';
+import { Typography, DialogContent, DialogTitle, Dialog } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { ConfirmSeat, SeatList, PageLoader } from './index';
@@ -19,6 +19,7 @@ import {
     setSelectedSeat
 } from '../redux/ducks/seats';
 import { ModalSeatListProps } from '../types';
+import { IconButtonStyled, DialogActionsStyled } from '../styled/ModalSeatListStyled';
 
 const ModalSeatList = ({ open, setOpen }: ModalSeatListProps) => {
     const isLoading: boolean = useSelector(selectIsLoading);
@@ -55,38 +56,27 @@ const ModalSeatList = ({ open, setOpen }: ModalSeatListProps) => {
 
     return (
         <Dialog maxWidth="md" fullWidth onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-            <DialogTitle align="center" sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+            <DialogTitle align="center" id="customized-dialog-title">
                 Seats for {selectedSession}
             </DialogTitle>
             {isLoading && !selectedSeat ? (
                 <PageLoader />
             ) : (
                 <>
-                    <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            color: (theme) => theme.palette.grey[500]
-                        }}
-                    >
+                    <IconButtonStyled aria-label="close" onClick={handleClose}>
                         <CloseIcon />
-                    </IconButton>
+                    </IconButtonStyled>
                     <DialogContent dividers>
                         <SeatList reservedSeat={reservedSeat} selectedSeat={selectedSeat} seats={seats} />
                     </DialogContent>
-                    <DialogActions
-                        sx={{ flexDirection: 'column', gap: '10px', minHeight: '150px', justifyContent: 'start' }}
-                    >
+                    <DialogActionsStyled>
                         <ConfirmSeat selectedSeat={selectedSeat} onReservedSeat={onReservedSeat} error={errorSeat} />
                         {confirmSeat && !errorSeat && (
                             <Typography variant="h4">
                                 {reservedSeat} {confirmSeat}
                             </Typography>
                         )}
-                    </DialogActions>
+                    </DialogActionsStyled>
                 </>
             )}
         </Dialog>
