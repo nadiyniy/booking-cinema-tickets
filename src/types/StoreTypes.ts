@@ -15,8 +15,13 @@ export type SessionState = {
     error: string | null;
     isLoading: boolean;
 };
+export type TrendingMoviesState = {
+    trendingMovies: string[];
+    isLoading: boolean;
+};
 
 export type Store = {
     seat: SeatState;
     session: SessionState;
+    movie: TrendingMoviesState;
 };
