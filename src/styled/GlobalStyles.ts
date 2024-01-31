@@ -111,6 +111,7 @@ export const GlobalStyles = createGlobalStyle`
         background-image: url(/home.jpg);
         background-position: center;
         background-size: cover;
+        background-attachment: fixed;
         padding-bottom: ${RootTheme.sizes.pixel_20};
         height: ${RootTheme.sizes.size_100vh};
     }

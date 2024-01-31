@@ -15,6 +15,7 @@ const Layout = ({ selectedDate }: LayoutProps) => (
                     <Link to="/">
                         <img src="/cinema-logo.svg" alt="logo" width="150" />
                     </Link>
+                    <Link to="/movies">movie</Link>
                     <SelectDate selectedDate={selectedDate} />
                 </ToolbarStyled>
             </Container>
