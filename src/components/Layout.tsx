@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { AppBar, Container } from '@mui/material';
+import { AppBar, Button, Container } from '@mui/material';
 
 import { PageLoader, SelectDate } from './index';
 
@@ -9,13 +9,18 @@ import { ToolbarStyled } from '../styled/LayoutStyled';
 
 const Layout = ({ selectedDate }: LayoutProps) => (
     <>
-        <AppBar position="static">
+        <AppBar position="static" color="transparent">
             <Container>
                 <ToolbarStyled>
                     <Link to="/">
-                        <img src="/cinema-logo.svg" alt="logo" width="150" />
+                        <Button>
+                            <img src="/cinema-logo.svg" alt="logo" width="150" />
+                        </Button>
                     </Link>
-                    <Link to="/movies">movie</Link>
+                    <Link to="/movies">
+                        <Button>movie</Button>
+                    </Link>
+
                     <SelectDate selectedDate={selectedDate} />
                 </ToolbarStyled>
             </Container>

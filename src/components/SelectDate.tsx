@@ -27,7 +27,7 @@ const SelectDate = ({ selectedDate }: SelectDateProps) => {
     return (
         <BoxStyled component="form">
             <TextField
-                color="secondary"
+                size="small"
                 label="Select date"
                 select
                 value={selectedDate}

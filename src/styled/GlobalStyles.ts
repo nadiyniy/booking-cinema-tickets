@@ -125,6 +125,10 @@ export const GlobalStyles = createGlobalStyle`
         cursor: pointer;
         padding: ${RootTheme.sizes.size_0};
     }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
     blockquote,
     q {
