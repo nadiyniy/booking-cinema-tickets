@@ -12,11 +12,16 @@ type ParamsType = {
     query?: string;
 };
 
-export const fetchTrendingMovies = async (time_window: timeWindowType = 'day', params?: ParamsType) => {
+export const fetchTrendingMovies = async (
+    time_window: timeWindowType = 'day',
+    page: number = 1,
+    params?: ParamsType
+) => {
     const { data } = await theMovieDBApi.get(`trending/movie/${time_window}`, {
         params: {
             ...params,
-            api_key: API_KEY
+            api_key: API_KEY,
+            page
         }
     });
     return data;
