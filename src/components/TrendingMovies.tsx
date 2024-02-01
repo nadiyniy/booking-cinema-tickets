@@ -1,12 +1,21 @@
 import { Container, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Grid, Table, TableHeaderRow, PagingPanel, SearchPanel, Toolbar } from '@devexpress/dx-react-grid-material-ui';
+import {
+    Grid,
+    Table,
+    TableHeaderRow,
+    PagingPanel,
+    SearchPanel,
+    Toolbar,
+    TableRowDetail
+} from '@devexpress/dx-react-grid-material-ui';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     CustomPaging,
     IntegratedFiltering,
     IntegratedSorting,
     PagingState,
+    RowDetailState,
     SearchState,
     Sorting,
     SortingState
@@ -15,12 +24,14 @@ import {
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
 import PageLoader from './PageLoader';
 import { MovieRow } from '../types/TrendingMoviesTypes';
+import MovieDetails from './MovieDetails';
 
 const HighlightedCell = ({ value, style, ...restProps }: any) => (
     <Table.Cell {...restProps} style={{ backgroundColor: value < 7 ? 'yellow' : undefined, ...style }}>
         <span>{value}</span>
     </Table.Cell>
 );
+
 const Cell = (props: any) => {
     const { column } = props;
     if (column.name === 'vote_average') {
@@ -29,16 +40,21 @@ const Cell = (props: any) => {
     return <Table.Cell {...props} />;
 };
 
+const RowDetail = ({ row }: any) => {
+    return <MovieDetails row={row} />;
+};
+
 const TrendingMovies = () => {
     const [rows, setRows] = useState<MovieRow[]>([]);
     const [columns] = useState([
         { name: 'vote_average', title: 'Vote average (is sortable)' },
         { name: 'title', title: 'Title' },
-        { name: 'poster', title: 'Poster' }
+        { name: 'poster', title: 'Poster' },
+        { name: 'id', title: 'ID' }
     ]);
     const [tableColumnExtensions] = useState<Table.ColumnExtension[]>([
         { columnName: 'poster', align: 'right' },
-        { columnName: 'vote_average', width: '150px', wordWrapEnabled: true }
+        { columnName: 'vote_average', width: '300px', wordWrapEnabled: true }
     ]);
     const [sortingStateColumnExtensions] = useState([
         { columnName: 'title', sortingEnabled: false },
@@ -60,10 +76,11 @@ const TrendingMovies = () => {
     useEffect(() => {
         const getRows = trendingMovies?.map((movie: any) => ({
             vote_average: movie.vote_average.toFixed(1),
+            id: movie.id,
             title: movie.original_title ?? movie.title ?? movie.name,
             poster: (
                 <img
-                    width={100}
+                    width={40}
                     style={{ marginLeft: 'auto' }}
                     src={
                         movie?.poster_path
@@ -95,7 +112,6 @@ const TrendingMovies = () => {
                             />
                             <SearchState defaultValue="" />
                             <IntegratedFiltering />
-
                             <CustomPaging totalCount={totalPages ?? 0} />
                             <SortingState
                                 sorting={sorting}
@@ -104,11 +120,11 @@ const TrendingMovies = () => {
                             />
                             <Table cellComponent={Cell} columnExtensions={tableColumnExtensions} />
                             <TableHeaderRow showSortingControls />
+                            <RowDetailState />
                             <IntegratedSorting />
                             <Toolbar />
-
+                            <TableRowDetail contentComponent={RowDetail} />
                             <SearchPanel />
-
                             <PagingPanel />
                         </Grid>
                     </Paper>

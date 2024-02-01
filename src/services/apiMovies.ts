@@ -26,3 +26,13 @@ export const fetchTrendingMovies = async (
     });
     return data;
 };
+
+export const fetchMovieById = async (id: number) => {
+    const { data } = await theMovieDBApi.get(`movie/${id}`, {
+        params: {
+            api_key: API_KEY
+        }
+    });
+
+    return data;
+};
