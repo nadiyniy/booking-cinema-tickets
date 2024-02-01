@@ -21,10 +21,11 @@ import {
     SortingState
 } from '@devexpress/dx-react-grid';
 
-import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
 import PageLoader from './PageLoader';
-import { MovieRow } from '../types/TrendingMoviesTypes';
 import MovieDetails from './MovieDetails';
+
+import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
+import { MovieRow } from '../types/TrendingMoviesTypes';
 
 const HighlightedCell = ({ value, style, ...restProps }: any) => (
     <Table.Cell {...restProps} style={{ backgroundColor: value < 7 ? 'yellow' : undefined, ...style }}>
@@ -54,11 +55,12 @@ const TrendingMovies = () => {
     ]);
     const [tableColumnExtensions] = useState<Table.ColumnExtension[]>([
         { columnName: 'poster', align: 'right' },
-        { columnName: 'vote_average', width: '300px', wordWrapEnabled: true }
+        { columnName: 'vote_average', wordWrapEnabled: true }
     ]);
     const [sortingStateColumnExtensions] = useState([
         { columnName: 'title', sortingEnabled: false },
-        { columnName: 'poster', sortingEnabled: false }
+        { columnName: 'poster', sortingEnabled: false },
+        { columnName: 'vote_average', sortingEnabled: true }
     ]);
     const [sorting, setSorting] = useState<Sorting[]>([]);
 
@@ -118,12 +120,12 @@ const TrendingMovies = () => {
                                 onSortingChange={setSorting}
                                 columnExtensions={sortingStateColumnExtensions}
                             />
+                            <IntegratedSorting />
                             <Table cellComponent={Cell} columnExtensions={tableColumnExtensions} />
                             <TableHeaderRow showSortingControls />
                             <RowDetailState />
-                            <IntegratedSorting />
-                            <Toolbar />
                             <TableRowDetail contentComponent={RowDetail} />
+                            <Toolbar />
                             <SearchPanel />
                             <PagingPanel />
                         </Grid>

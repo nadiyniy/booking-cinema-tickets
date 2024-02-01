@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { fetchMovieById } from '../services/apiMovies';
-import { StyledContent } from '../styled/MovieDetailsStyled';
-import { MovieDetailsTypes } from '../types/MovieDetailsTypes';
+
 import PageLoader from './PageLoader';
+
+import { fetchMovieById } from '../services/apiMovies';
+import { MovieDetailsTypes } from '../types/MovieDetailsTypes';
+import { StyledContent } from '../styled/MovieDetailsStyled';
 
 const MovieDetails = ({ row }: any) => {
     const [movieDetails, setMovieDetails] = useState<MovieDetailsTypes | null>(null);
