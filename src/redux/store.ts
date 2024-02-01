@@ -4,12 +4,14 @@ import createSagaMiddleware from 'redux-saga';
 
 import sessionReducer, { sessionSaga } from './ducks/sessions';
 import seatReducer, { seatSaga } from './ducks/seats';
+import moviesReducer, { trendingMoviesSaga } from './ducks/movies';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    seat: seatReducer
+    seat: seatReducer,
+    movie: moviesReducer
 });
 
 const store = configureStore({
@@ -19,5 +21,6 @@ const store = configureStore({
 
 sagaMiddleware.run(sessionSaga);
 sagaMiddleware.run(seatSaga);
+sagaMiddleware.run(trendingMoviesSaga);
 
 export default store;
