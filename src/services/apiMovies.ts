@@ -6,8 +6,8 @@ const theMovieDBApi = axios.create({
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-type timeWindowType = 'day' | 'week';
-type ParamsType = {
+export type timeWindowType = 'day' | 'week';
+export type ParamsType = {
     page?: number;
     query?: string;
 };

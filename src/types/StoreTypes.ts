@@ -18,6 +18,8 @@ export type SessionState = {
 export type TrendingMoviesState = {
     trendingMovies: string[];
     isLoading: boolean;
+    totalPages?: number | null;
+    totalResults?: number | null;
 };
 
 export type Store = {
