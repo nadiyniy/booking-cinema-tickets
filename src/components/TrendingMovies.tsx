@@ -1,8 +1,16 @@
 import { Container, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Grid, Table, TableHeaderRow, PagingPanel } from '@devexpress/dx-react-grid-material-ui';
+import { Grid, Table, TableHeaderRow, PagingPanel, SearchPanel, Toolbar } from '@devexpress/dx-react-grid-material-ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomPaging, IntegratedSorting, PagingState, Sorting, SortingState } from '@devexpress/dx-react-grid';
+import {
+    CustomPaging,
+    IntegratedFiltering,
+    IntegratedSorting,
+    PagingState,
+    SearchState,
+    Sorting,
+    SortingState
+} from '@devexpress/dx-react-grid';
 
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
 import PageLoader from './PageLoader';
@@ -24,7 +32,7 @@ const Cell = (props: any) => {
 const TrendingMovies = () => {
     const [rows, setRows] = useState<MovieRow[]>([]);
     const [columns] = useState([
-        { name: 'vote_average', title: 'Vote average' },
+        { name: 'vote_average', title: 'Vote average (is sortable)' },
         { name: 'title', title: 'Title' },
         { name: 'poster', title: 'Poster' }
     ]);
@@ -36,7 +44,7 @@ const TrendingMovies = () => {
         { columnName: 'title', sortingEnabled: false },
         { columnName: 'poster', sortingEnabled: false }
     ]);
-    const [sorting, setSorting] = useState<Sorting[]>([{ columnName: 'vote_average', direction: 'asc' }]);
+    const [sorting, setSorting] = useState<Sorting[]>([]);
 
     const trendingMovies = useSelector(selectTrendingMovies);
     const isLoading = useSelector(selectIsLoading);
@@ -75,7 +83,7 @@ const TrendingMovies = () => {
                 <PageLoader />
             ) : (
                 <Container>
-                    <Typography align="center" variant="h3">
+                    <Typography align="center" variant="h2">
                         Trending films
                     </Typography>
                     <Paper>
@@ -85,15 +93,21 @@ const TrendingMovies = () => {
                                 onCurrentPageChange={setCurrentPage}
                                 pageSize={trendingMovies.length}
                             />
+                            <SearchState defaultValue="" />
+                            <IntegratedFiltering />
+
                             <CustomPaging totalCount={totalPages ?? 0} />
                             <SortingState
                                 sorting={sorting}
                                 onSortingChange={setSorting}
                                 columnExtensions={sortingStateColumnExtensions}
                             />
-                            <IntegratedSorting />
                             <Table cellComponent={Cell} columnExtensions={tableColumnExtensions} />
                             <TableHeaderRow showSortingControls />
+                            <IntegratedSorting />
+                            <Toolbar />
+
+                            <SearchPanel />
 
                             <PagingPanel />
                         </Grid>
