@@ -4,9 +4,7 @@ const theMovieDBApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
 });
 
-// const API_KEY = import.meta.env.VITE_API_KEY;
-
-const key = '13f507f7afd2e84a62cca8b12f55dea4';
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export type timeWindowType = 'day' | 'week';
 export type ParamsType = {
@@ -22,7 +20,7 @@ export const fetchTrendingMovies = async (
     const { data } = await theMovieDBApi.get(`trending/movie/${time_window}`, {
         params: {
             ...params,
-            api_key: key,
+            api_key: API_KEY,
             page
         }
     });
@@ -32,7 +30,7 @@ export const fetchTrendingMovies = async (
 export const fetchMovieById = async (id: number) => {
     const { data } = await theMovieDBApi.get(`movie/${id}`, {
         params: {
-            api_key: key
+            api_key: API_KEY
         }
     });
 
