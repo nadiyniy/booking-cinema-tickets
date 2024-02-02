@@ -6,3 +6,6 @@ export { default as Home } from './Home';
 export { default as SelectDate } from './SelectDate';
 export { default as ConfirmSeat } from './ConfirmSeat';
 export { default as SeatList } from './SeatList';
+export { default as Todos } from './Todos';
+export { default as TrendingMovies } from './TrendingMovies';
+export { default as MovieDetails } from './MovieDetails';
