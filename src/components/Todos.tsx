@@ -3,9 +3,10 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { nanoid } from 'nanoid';
 
 import { makeRequest } from '../services/apiTodos';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -46,11 +47,11 @@ const columns: GridColDef[] = [
 ];
 
 const Todos = () => {
-    const [newTodo, setNewTodo] = useState('');
+    const [newTodoValue, setNewTodoValue] = useState('');
     const [foundTodo, setFoundTodo] = useState('');
-    const [allTodos, setAllTodos] = useState([]);
-    console.log(allTodos);
-
+    const [allTodos, setAllTodos] = useState<
+        { id: string; completed: boolean; user: { name: string; phone: string; email: string }; title: string }[]
+    >([]);
     const rows = allTodos.map((todo) => ({
         delete: 'delete',
         completed: todo.completed,
@@ -60,6 +61,7 @@ const Todos = () => {
         phone: todo.user.phone,
         email: todo.user.email
     }));
+
     useEffect(() => {
         makeRequest(`query allTodos{
   todos{
@@ -82,8 +84,26 @@ const Todos = () => {
 
     const handleCreateTodo = (event: any) => {
         event.preventDefault();
-        console.log('створене todo:', newTodo);
-        setNewTodo('');
+        if (newTodoValue) {
+            makeRequest(`mutation CreateTodo{
+  createTodo(input: {title: "${newTodoValue}", completed: false} ){
+    id
+    title
+    completed
+    user{
+      name
+    }
+    
+  }
+  
+}`).then((res) => {
+                const duplicatedObject = { ...res.data.createTodo };
+                duplicatedObject.id = nanoid();
+                console.log(duplicatedObject);
+                setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
+                setNewTodoValue('');
+            });
+        }
     };
 
     const handleSearchTodo = (event: any) => {
@@ -118,8 +138,8 @@ const Todos = () => {
                     <TextField
                         label="New todo"
                         size="small"
-                        value={newTodo}
-                        onChange={(e) => setNewTodo(e.target.value)}
+                        value={newTodoValue}
+                        onChange={(e) => setNewTodoValue(e.target.value)}
                         fullWidth
                     />
                     <Button
