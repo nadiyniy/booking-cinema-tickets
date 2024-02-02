@@ -21,8 +21,7 @@ import {
     SortingState
 } from '@devexpress/dx-react-grid';
 
-import PageLoader from './PageLoader';
-import MovieDetails from './MovieDetails';
+import { PageLoader, MovieDetails } from '.';
 
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
 import { MovieRow } from '../types/TrendingMoviesTypes';
@@ -103,7 +102,7 @@ const TrendingMovies = () => {
             ) : (
                 <Container>
                     <Typography align="center" variant="h2">
-                        Trending films
+                        Trending films React Grid
                     </Typography>
                     <Paper>
                         <Grid rows={rows} columns={columns}>

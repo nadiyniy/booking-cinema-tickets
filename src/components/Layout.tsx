@@ -18,7 +18,10 @@ const Layout = ({ selectedDate }: LayoutProps) => (
                         </Button>
                     </Link>
                     <Link to="/movies">
-                        <Button>movie</Button>
+                        <Button>React Grid</Button>
+                    </Link>
+                    <Link to="/todos">
+                        <Button>GraphQL</Button>
                     </Link>
 
                     <SelectDate selectedDate={selectedDate} />
