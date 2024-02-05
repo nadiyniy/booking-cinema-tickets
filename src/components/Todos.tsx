@@ -108,6 +108,11 @@ const Todos = () => {
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
+            setFoundTodos((prevTodos: any) =>
+                prevTodos.map((todo: any) =>
+                    todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
+                )
+            );
         });
     };
 
@@ -116,6 +121,7 @@ const Todos = () => {
   deleteTodo(id: "${id}")
 }`).then(() => {
             setAllTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+            setFoundTodos((prevTodos: any) => prevTodos.filter((todo: any) => todo.id !== id));
         });
     };
 
