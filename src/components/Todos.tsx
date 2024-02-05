@@ -48,11 +48,13 @@ const columns: GridColDef[] = [
 
 const Todos = () => {
     const [newTodoValue, setNewTodoValue] = useState('');
-    const [foundTodo, setFoundTodo] = useState('');
+    const [foundTodoValue, setFoundTodoValue] = useState('');
+    const [foundTodos, setFoundTodos] = useState([]);
     const [allTodos, setAllTodos] = useState<
         { id: string; completed: boolean; user: { name: string; phone: string; email: string }; title: string }[]
     >([]);
-    const rows = allTodos.map((todo) => ({
+
+    const rows = (foundTodos.length ? foundTodos : allTodos).map((todo) => ({
         delete: 'delete',
         completed: todo.completed,
         id: todo.id,
@@ -63,7 +65,8 @@ const Todos = () => {
     }));
 
     useEffect(() => {
-        makeRequest(`query allTodos{
+        if (!foundTodoValue) {
+            makeRequest(`query allTodos{
   todos{
   data{
     title
@@ -80,7 +83,9 @@ const Todos = () => {
     }
 
 }`).then((res) => setAllTodos(res.data.todos.data));
-    }, []);
+            setFoundTodos([]);
+        }
+    }, [foundTodoValue]);
 
     const handleCreateTodo = (event: any) => {
         event.preventDefault();
@@ -99,7 +104,6 @@ const Todos = () => {
 }`).then((res) => {
                 const duplicatedObject = { ...res.data.createTodo };
                 duplicatedObject.id = nanoid();
-                console.log(duplicatedObject);
                 setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
                 setNewTodoValue('');
             });
@@ -108,16 +112,27 @@ const Todos = () => {
 
     const handleSearchTodo = (event: any) => {
         event.preventDefault();
-        console.log('знайдене Todo:', foundTodo);
-        setFoundTodo('');
-    };
+        makeRequest(`query SearchQuery{
+  todos(options: {
+  search: {q: "${foundTodoValue}"}
+  }){
+  data{
+   title
+    completed
+    id
+    user{
+      id
+      email
+      name
+      phone
+    }
+  }
+    }
 
-    <Box component="form" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-        <TextField label="New todo" size="small" />
-        <Button variant="contained" startIcon={<AddIcon />}>
-            Create todo
-        </Button>
-    </Box>;
+}`).then((res) => {
+            setFoundTodos(res.data.todos.data);
+        });
+    };
     return (
         <Container>
             <Typography align="center" variant="h2">
@@ -166,8 +181,8 @@ const Todos = () => {
                         fullWidth
                         label="Search todo"
                         size="small"
-                        value={foundTodo}
-                        onChange={(e) => setFoundTodo(e.target.value)}
+                        value={foundTodoValue}
+                        onChange={(e) => setFoundTodoValue(e.target.value)}
                     />
                     <Button
                         fullWidth
