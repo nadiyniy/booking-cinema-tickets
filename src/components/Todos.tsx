@@ -11,26 +11,27 @@ import { makeRequest } from '../services/apiTodos';
 import PageLoader from './PageLoader';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 type Todo = {
-    id: string;
-    title: string;
-    completed: boolean;
-    user: {
-        name: string;
+    id?: string;
+    title?: string;
+    completed?: boolean;
+    user?: {
+        name?: string;
     };
 };
+
 const Todos = () => {
     const [newTodoValue, setNewTodoValue] = useState('');
     const [foundTodoValue, setFoundTodoValue] = useState('');
-    const [foundTodos, setFoundTodos] = useState([]);
+    const [foundTodos, setFoundTodos] = useState<Todo[]>([]);
     const [request, setRequest] = useState(false);
     const [allTodos, setAllTodos] = useState<Todo[]>([]);
     const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
     const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-    const [currentDeleteId, setCurrentDeleteId] = useState(null);
+    const [currentDeleteId, setCurrentDeleteId] = useState('');
     const [isLoadingCheck, setIsLoadingCheck] = useState(false);
     const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-    console.log(isLoadingAllTodos, isLoadingSearch);
 
     useEffect(() => {
         setIsLoadingAllTodos(true);
@@ -240,6 +241,7 @@ const Todos = () => {
                         fullWidth
                     />
                     <Button
+                        disabled={!newTodoValue}
                         fullWidth
                         variant="contained"
                         startIcon={<AddIcon />}
@@ -266,7 +268,10 @@ const Todos = () => {
                         value={foundTodoValue}
                         onChange={(e) => handleChangeValue(e)}
                     />
-                    <Button
+                    <LoadingButton
+                        disabled={!foundTodoValue}
+                        loading={isLoadingSearch}
+                        loadingPosition="start"
                         fullWidth
                         variant="contained"
                         startIcon={<SearchIcon />}
@@ -274,11 +279,11 @@ const Todos = () => {
                         sx={{ minWidth: '155px' }}
                     >
                         Search todo
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </Box>
             <Paper>
-                {isLoadingAllTodos ? (
+                {isLoadingAllTodos || isLoadingSearch ? (
                     <PageLoader />
                 ) : !foundTodos.length && foundTodoValue && request ? (
                     <Typography align="center" variant="h6">
