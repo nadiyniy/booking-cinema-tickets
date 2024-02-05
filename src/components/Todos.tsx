@@ -8,6 +8,7 @@ import { nanoid } from 'nanoid';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { makeRequest } from '../services/apiTodos';
+import PageLoader from './PageLoader';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 type Todo = {
@@ -29,7 +30,7 @@ const Todos = () => {
     const [currentDeleteId, setCurrentDeleteId] = useState(null);
     const [isLoadingCheck, setIsLoadingCheck] = useState(false);
     const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-    console.log(isLoadingAllTodos, isLoadingDelete, isLoadingCheck, isLoadingSearch);
+    console.log(isLoadingAllTodos, isLoadingSearch);
 
     useEffect(() => {
         setIsLoadingAllTodos(true);
@@ -113,6 +114,7 @@ const Todos = () => {
     };
 
     const handleChangeStatus = (id: string, completed: boolean) => {
+        setCurrentDeleteId(id);
         setIsLoadingCheck(true);
         makeRequest(`mutation UpdateTodo {
             updateTodo(id: "${id}", input: { completed: ${completed} }) {
@@ -168,6 +170,7 @@ const Todos = () => {
             renderCell: (params) => (
                 <Checkbox
                     checked={params.row.completed}
+                    disabled={isLoadingCheck && currentDeleteId === params.row.id}
                     {...label}
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite />}
@@ -275,7 +278,9 @@ const Todos = () => {
                 </Box>
             </Box>
             <Paper>
-                {!foundTodos.length && foundTodoValue && request ? (
+                {isLoadingAllTodos ? (
+                    <PageLoader />
+                ) : !foundTodos.length && foundTodoValue && request ? (
                     <Typography align="center" variant="h6">
                         No tasks found.
                     </Typography>
