@@ -10,51 +10,16 @@ import { makeRequest } from '../services/apiTodos';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const columns: GridColDef[] = [
-    {
-        field: 'favorite',
-        headerName: '',
-        width: 60,
-        sortable: false,
-        filterable: false,
-        groupable: false,
-        hideable: false,
-
-        renderCell: (params) => (
-            <Checkbox checked={params.row.completed} {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-        )
-    },
-    {
-        field: 'delete',
-        headerName: '',
-        width: 100,
-        sortable: false,
-        filterable: false,
-        groupable: false,
-        hideable: false,
-
-        renderCell: (params) => (
-            <Button variant="outlined" onClick={() => console.log(params, 123)}>
-                Delete
-            </Button>
-        )
-    },
-    { field: 'id', headerName: 'ID', width: 50 },
-    { field: 'title', headerName: 'Todo', width: 300 },
-    { field: 'name', headerName: 'Name', width: 130 },
-    { field: 'phone', headerName: 'Phone', width: 150 },
-    { field: 'email', headerName: 'Email', description: 'This is email', sortable: false, width: 160 }
-];
-
 const Todos = () => {
     const [newTodoValue, setNewTodoValue] = useState('');
     const [foundTodoValue, setFoundTodoValue] = useState('');
     const [foundTodos, setFoundTodos] = useState([]);
+    const [request, setRequest] = useState(false);
     const [allTodos, setAllTodos] = useState<
         { id: string; completed: boolean; user: { name: string; phone: string; email: string }; title: string }[]
     >([]);
 
-    const rows = (foundTodos.length ? foundTodos : allTodos).map((todo) => ({
+    const rows = ((foundTodos?.length && foundTodoValue && foundTodos) || allTodos).map((todo) => ({
         delete: 'delete',
         completed: todo.completed,
         id: todo.id,
@@ -83,9 +48,8 @@ const Todos = () => {
     }
 
 }`).then((res) => setAllTodos(res.data.todos.data));
-            setFoundTodos([]);
         }
-    }, [foundTodoValue]);
+    }, []);
 
     const handleCreateTodo = (event: any) => {
         event.preventDefault();
@@ -94,7 +58,8 @@ const Todos = () => {
   createTodo(input: {title: "${newTodoValue}", completed: false} ){
     id
     title
-    completed
+       
+            completed
     user{
       name
     }
@@ -112,27 +77,83 @@ const Todos = () => {
 
     const handleSearchTodo = (event: any) => {
         event.preventDefault();
-        makeRequest(`query SearchQuery{
-  todos(options: {
-  search: {q: "${foundTodoValue}"}
-  }){
-  data{
-   title
-    completed
-    id
-    user{
-      id
-      email
-      name
-      phone
-    }
-  }
-    }
-
-}`).then((res) => {
-            setFoundTodos(res.data.todos.data);
-        });
+        if (foundTodoValue) {
+            makeRequest(`query SearchQuery{
+                todos(options: {
+                    search: {q: "${foundTodoValue}"}
+                }){
+                    data{
+                        title
+                        completed
+                        id
+                        user{
+                            id
+                            email
+                            name
+                            phone
+                        }
+                    }
+                }
+                
+            }`).then((res) => {
+                if (res.data.todos.data.length) {
+                    setFoundTodos(res.data.todos.data);
+                } else {
+                    setRequest((prev) => !prev);
+                }
+            });
+        }
     };
+
+    const columns: GridColDef[] = [
+        {
+            field: 'favorite',
+            headerName: '',
+            width: 60,
+            sortable: false,
+            filterable: false,
+            groupable: false,
+            hideable: false,
+
+            renderCell: (params) => (
+                <Checkbox
+                    checked={params.row.completed}
+                    {...label}
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite />}
+                />
+            )
+        },
+        {
+            field: 'delete',
+            headerName: '',
+            width: 100,
+            sortable: false,
+            filterable: false,
+            groupable: false,
+            hideable: false,
+
+            renderCell: (params) => (
+                <Button variant="outlined" onClick={() => console.log(params, 123)}>
+                    Delete
+                </Button>
+            )
+        },
+        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'title', headerName: 'Todo', width: 300 },
+        { field: 'name', headerName: 'Name', width: 130 },
+        { field: 'phone', headerName: 'Phone', width: 150 },
+        { field: 'email', headerName: 'Email', description: 'This is email', sortable: false, width: 160 }
+    ];
+
+    const handleChangeValue = (e: any) => {
+        if (!e.target.value) {
+            setFoundTodos([]);
+            setRequest(false);
+        }
+        setFoundTodoValue(e.target.value);
+    };
+
     return (
         <Container>
             <Typography align="center" variant="h2">
@@ -182,7 +203,7 @@ const Todos = () => {
                         label="Search todo"
                         size="small"
                         value={foundTodoValue}
-                        onChange={(e) => setFoundTodoValue(e.target.value)}
+                        onChange={(e) => handleChangeValue(e)}
                     />
                     <Button
                         fullWidth
@@ -196,17 +217,23 @@ const Todos = () => {
                 </Box>
             </Box>
             <Paper>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 5 }
-                        }
-                    }}
-                    pageSizeOptions={[5, 10, 20, 100]}
-                    autoHeight
-                />
+                {!foundTodos.length && foundTodoValue && request ? (
+                    <Typography align="center" variant="h6">
+                        No tasks found.
+                    </Typography>
+                ) : (
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 5 }
+                            }
+                        }}
+                        pageSizeOptions={[5, 10, 20, 100]}
+                        autoHeight
+                    />
+                )}
             </Paper>
         </Container>
     );
