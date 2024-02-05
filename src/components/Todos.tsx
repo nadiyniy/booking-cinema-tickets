@@ -1,10 +1,11 @@
 import { Container, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import { CreateTodo, SearchTodo, TodosList } from '.';
+import { SearchTodo, TodosList } from '.';
 
 import { TodoProps } from '../types';
 import { BoxTodos } from '../styled/TodosStyled';
+import CreateTodo from './CreateTodo';
 
 const Todos = () => {
     const [allTodos, setAllTodos] = useState<TodoProps[]>([]);
