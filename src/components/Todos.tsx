@@ -14,6 +14,7 @@ const Todos = () => {
     const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
     const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
+
     return (
         <Container>
             <Typography align="center" variant="h2">
@@ -41,6 +42,7 @@ const Todos = () => {
                 isLoadingAllTodos={isLoadingAllTodos}
                 isLoadingSearch={isLoadingSearch}
             />
+
         </Container>
     );
 };
