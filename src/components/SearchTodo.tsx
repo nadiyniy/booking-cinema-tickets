@@ -1,8 +1,9 @@
-import { Box, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
 
 import { makeRequest } from '../services/apiTodos';
+import { BoxSearchTodo } from '../styled/SearchTodoStyled';
 
 const SearchTodo = ({
     setFoundTodoValue,
@@ -32,6 +33,7 @@ const SearchTodo = ({
             });
         }
     };
+
     const handleChangeValue = (e: any) => {
         if (!e.target.value) {
             setFoundTodos([]);
@@ -39,17 +41,9 @@ const SearchTodo = ({
         }
         setFoundTodoValue(e.target.value);
     };
+
     return (
-        <Box
-            component="form"
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '20px'
-            }}
-            onSubmit={(event) => handleSearchTodo(event)}
-        >
+        <BoxSearchTodo component="form" onSubmit={(event) => handleSearchTodo(event)}>
             <TextField
                 fullWidth
                 label="Search todo"
@@ -66,11 +60,10 @@ const SearchTodo = ({
                 variant="contained"
                 startIcon={<SearchIcon />}
                 type="submit"
-                sx={{ minWidth: '155px' }}
             >
                 Search todo
             </LoadingButton>
-        </Box>
+        </BoxSearchTodo>
     );
 };
 

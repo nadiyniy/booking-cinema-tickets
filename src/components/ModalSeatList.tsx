@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Typography, DialogContent, DialogTitle, Dialog } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { ConfirmSeat, SeatList, PageLoader } from './index';
+import { ConfirmSeat, SeatList, PageLoader } from '.';
 
 import { selectSessions } from '../redux/ducks/sessions';
 import {

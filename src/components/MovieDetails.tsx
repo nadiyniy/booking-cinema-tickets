@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import PageLoader from './PageLoader';
+import { PageLoader } from '.';
 
 import { fetchMovieById } from '../services/apiMovies';
 import { MovieDetailsTypes } from '../types/MovieDetailsTypes';

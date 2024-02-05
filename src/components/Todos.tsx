@@ -1,11 +1,10 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import CreateTodo from './Createtodo';
-import SearchTodo from './SearchTodo';
-import TodosList from './TodosList';
+import { CreateTodo, SearchTodo, TodosList } from '.';
 
 import { Todo } from '../types/TodosTypes';
+import { BoxTodos } from '../styled/TodosStyled';
 
 const Todos = () => {
     const [allTodos, setAllTodos] = useState<Todo[]>([]);
@@ -20,7 +19,7 @@ const Todos = () => {
             <Typography align="center" variant="h2">
                 Todos GraphQL
             </Typography>
-            <Box sx={{ display: 'flex', gap: '20px', mb: '10px' }}>
+            <BoxTodos>
                 <CreateTodo setAllTodos={setAllTodos} />
                 <SearchTodo
                     setFoundTodoValue={setFoundTodoValue}
@@ -30,7 +29,7 @@ const Todos = () => {
                     setFoundTodos={setFoundTodos}
                     isLoadingSearch={isLoadingSearch}
                 />
-            </Box>
+            </BoxTodos>
             <TodosList
                 setIsLoadingAllTodos={setIsLoadingAllTodos}
                 foundTodoValue={foundTodoValue}

@@ -1,4 +1,4 @@
-import LoaderSpinner from './LoaderSpinner';
+import { LoaderSpinner } from '.';
 
 import { ContainerStyled } from '../styled/PageLoaderStyled';
 

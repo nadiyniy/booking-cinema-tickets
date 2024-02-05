@@ -3,9 +3,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import { GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-
-import PageLoader from './PageLoader';
 import { useEffect, useState } from 'react';
+
+import { PageLoader } from '.';
+
 import { makeRequest } from '../services/apiTodos';
 
 const TodosList = ({

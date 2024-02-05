@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { AppBar, Button, Container } from '@mui/material';
 
-import { PageLoader, SelectDate } from './index';
+import { PageLoader, SelectDate } from '.';
 
 import { LayoutProps } from '../types';
 import { ToolbarStyled } from '../styled/LayoutStyled';
