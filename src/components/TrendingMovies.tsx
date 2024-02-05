@@ -24,7 +24,7 @@ import {
 import { PageLoader, MovieDetails } from '.';
 
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
-import { MovieRow } from '../types/TrendingMoviesTypes';
+import { MovieRowProps } from '../types';
 
 const HighlightedCell = ({ value, style, ...restProps }: any) => (
     <Table.Cell {...restProps} style={{ backgroundColor: value < 7 ? 'yellow' : undefined, ...style }}>
@@ -45,7 +45,7 @@ const RowDetail = ({ row }: any) => {
 };
 
 const TrendingMovies = () => {
-    const [rows, setRows] = useState<MovieRow[]>([]);
+    const [rows, setRows] = useState<MovieRowProps[]>([]);
     const [columns] = useState([
         { name: 'vote_average', title: 'Vote average (is sortable)' },
         { name: 'title', title: 'Title' },

@@ -3,17 +3,16 @@ import { useState } from 'react';
 
 import { CreateTodo, SearchTodo, TodosList } from '.';
 
-import { Todo } from '../types/TodosTypes';
+import { TodoProps } from '../types';
 import { BoxTodos } from '../styled/TodosStyled';
 
 const Todos = () => {
-    const [allTodos, setAllTodos] = useState<Todo[]>([]);
+    const [allTodos, setAllTodos] = useState<TodoProps[]>([]);
     const [foundTodoValue, setFoundTodoValue] = useState('');
-    const [foundTodos, setFoundTodos] = useState<Todo[]>([]);
+    const [foundTodos, setFoundTodos] = useState<TodoProps[]>([]);
     const [requestSearch, setRequestSearch] = useState(false);
     const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
     const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-
 
     return (
         <Container>
@@ -42,7 +41,6 @@ const Todos = () => {
                 isLoadingAllTodos={isLoadingAllTodos}
                 isLoadingSearch={isLoadingSearch}
             />
-
         </Container>
     );
 };

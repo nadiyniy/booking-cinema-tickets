@@ -5,10 +5,10 @@ import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 
 import { makeRequest } from '../services/apiTodos';
-import { Todo } from '../types/TodosTypes';
+import { TodoProps } from '../types';
 
 type CreateTodoProps = {
-    setAllTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+    setAllTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
 };
 
 const CreateTodo: React.FC<CreateTodoProps> = ({ setAllTodos }) => {

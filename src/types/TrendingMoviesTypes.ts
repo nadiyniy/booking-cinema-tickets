@@ -1,4 +1,4 @@
-export type Movie = {
+export type MovieProps = {
     adult?: boolean;
     backdrop_path?: string;
     id?: number;
@@ -16,7 +16,7 @@ export type Movie = {
     vote_count?: number;
 };
 
-export type MovieRow = {
+export type MovieRowProps = {
     poster?: any;
     title?: string;
     vote_average?: number;
