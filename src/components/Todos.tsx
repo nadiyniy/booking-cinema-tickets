@@ -111,6 +111,14 @@ const Todos = () => {
         });
     };
 
+    const handleDeleteTodo = (id: string) => {
+        makeRequest(`mutation DeleteTodo{
+  deleteTodo(id: "${id}")
+}`).then(() => {
+            setAllTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+        });
+    };
+
     const handleChangeValue = (e: any) => {
         if (!e.target.value) {
             setFoundTodos([]);
@@ -149,7 +157,7 @@ const Todos = () => {
             hideable: false,
 
             renderCell: (params) => (
-                <Button variant="outlined" onClick={() => console.log(params, 123)}>
+                <Button variant="outlined" onClick={() => handleDeleteTodo(params.row.id)}>
                     Delete
                 </Button>
             )
