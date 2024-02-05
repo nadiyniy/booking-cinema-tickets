@@ -2,26 +2,38 @@ import { Box, Button, Checkbox, Container, Paper, TextField, Typography } from '
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { nanoid } from 'nanoid';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { makeRequest } from '../services/apiTodos';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
+type Todo = {
+    id: string;
+    title: string;
+    completed: boolean;
+    user: {
+        name: string;
+    };
+};
 const Todos = () => {
     const [newTodoValue, setNewTodoValue] = useState('');
     const [foundTodoValue, setFoundTodoValue] = useState('');
     const [foundTodos, setFoundTodos] = useState([]);
     const [request, setRequest] = useState(false);
-    const [allTodos, setAllTodos] = useState<
-        { id: string; completed: boolean; user: { name: string; phone: string; email: string }; title: string }[]
-    >([]);
+    const [allTodos, setAllTodos] = useState<Todo[]>([]);
+    const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
+    const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+    const [currentDeleteId, setCurrentDeleteId] = useState(null);
+    const [isLoadingCheck, setIsLoadingCheck] = useState(false);
+    const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+    console.log(isLoadingAllTodos, isLoadingDelete, isLoadingCheck, isLoadingSearch);
 
     useEffect(() => {
-        if (!foundTodoValue) {
-            makeRequest(`query allTodos{
+        setIsLoadingAllTodos(true);
+        makeRequest(`query allTodos{
   todos{
   data{
     title
@@ -37,8 +49,10 @@ const Todos = () => {
   }
     }
 
-}`).then((res) => setAllTodos(res.data.todos.data));
-        }
+}`).then((res) => {
+            setAllTodos(res.data.todos.data);
+            setIsLoadingAllTodos(false);
+        });
     }, []);
 
     const handleCreateTodo = (event: any) => {
@@ -66,6 +80,7 @@ const Todos = () => {
     };
 
     const handleSearchTodo = (event: any) => {
+        setIsLoadingSearch(true);
         event.preventDefault();
         if (foundTodoValue) {
             makeRequest(`query SearchQuery{
@@ -88,14 +103,17 @@ const Todos = () => {
             }`).then((res) => {
                 if (res.data.todos.data.length) {
                     setFoundTodos(res.data.todos.data);
+                    setIsLoadingSearch(false);
                 } else {
                     setRequest((prev) => !prev);
+                    setIsLoadingSearch(false);
                 }
             });
         }
     };
 
     const handleChangeStatus = (id: string, completed: boolean) => {
+        setIsLoadingCheck(true);
         makeRequest(`mutation UpdateTodo {
             updateTodo(id: "${id}", input: { completed: ${completed} }) {
                 id
@@ -103,8 +121,8 @@ const Todos = () => {
             }
         }`).then((res) => {
             const updatedTodo = res.data.updateTodo;
-            setAllTodos((prevTodos) =>
-                prevTodos.map((todo) =>
+            setAllTodos((prevTodos: any) =>
+                prevTodos.map((todo: any) =>
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
@@ -113,15 +131,19 @@ const Todos = () => {
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
+            setIsLoadingCheck(false);
         });
     };
 
     const handleDeleteTodo = (id: string) => {
+        setCurrentDeleteId(id);
+        setIsLoadingDelete(true);
         makeRequest(`mutation DeleteTodo{
   deleteTodo(id: "${id}")
 }`).then(() => {
-            setAllTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+            setAllTodos((prevTodos) => prevTodos.filter((todo: any) => todo.id !== id));
             setFoundTodos((prevTodos: any) => prevTodos.filter((todo: any) => todo.id !== id));
+            setIsLoadingDelete(false);
         });
     };
 
@@ -156,16 +178,22 @@ const Todos = () => {
         {
             field: 'delete',
             headerName: '',
-            width: 100,
+            width: 150,
             sortable: false,
             filterable: false,
             groupable: false,
             hideable: false,
 
             renderCell: (params) => (
-                <Button variant="outlined" onClick={() => handleDeleteTodo(params.row.id)}>
+                <LoadingButton
+                    startIcon={<GridDeleteIcon />}
+                    loadingPosition="start"
+                    loading={isLoadingDelete && currentDeleteId === params.row.id}
+                    variant="outlined"
+                    onClick={() => handleDeleteTodo(params.row.id)}
+                >
                     Delete
-                </Button>
+                </LoadingButton>
             )
         },
         { field: 'id', headerName: 'ID', width: 50 },
