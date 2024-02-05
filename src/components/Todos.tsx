@@ -5,53 +5,31 @@ import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { nanoid } from 'nanoid';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { LoadingButton } from '@mui/lab';
 
-import { makeRequest } from '../services/apiTodos';
 import PageLoader from './PageLoader';
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-type Todo = {
-    id?: string;
-    title?: string;
-    completed?: boolean;
-    user?: {
-        name?: string;
-    };
-};
+import { makeRequest } from '../services/apiTodos';
+import { Todo } from '../types/TodosTypes';
 
 const Todos = () => {
+    const [allTodos, setAllTodos] = useState<Todo[]>([]);
     const [newTodoValue, setNewTodoValue] = useState('');
     const [foundTodoValue, setFoundTodoValue] = useState('');
     const [foundTodos, setFoundTodos] = useState<Todo[]>([]);
-    const [request, setRequest] = useState(false);
-    const [allTodos, setAllTodos] = useState<Todo[]>([]);
+    const [requestSearch, setRequestSearch] = useState(false);
+    const [currentDeleteId, setCurrentDeleteId] = useState('');
     const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
     const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-    const [currentDeleteId, setCurrentDeleteId] = useState('');
     const [isLoadingCheck, setIsLoadingCheck] = useState(false);
     const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
     useEffect(() => {
-        setIsLoadingAllTodos(true);
-        makeRequest(`query allTodos{
-  todos{
-  data{
-    title
-    completed
-    
-    id
-    user{
-      id
-      email
-      name
-      phone
-    }
-  }
-    }
+        const allTodosQuery = `query allTodos { todos { data { title completed id user { id email name phone } } } }`;
 
-}`).then((res) => {
+        setIsLoadingAllTodos(true);
+
+        makeRequest(allTodosQuery).then((res) => {
             setAllTodos(res.data.todos.data);
             setIsLoadingAllTodos(false);
         });
@@ -59,22 +37,14 @@ const Todos = () => {
 
     const handleCreateTodo = (event: any) => {
         event.preventDefault();
+
+        const createTodoRequest = `mutation CreateTodo { createTodo(input: { title: "${newTodoValue}", completed: false } ){ id title completed user { name } } }`;
+
         if (newTodoValue) {
-            makeRequest(`mutation CreateTodo{
-  createTodo(input: {title: "${newTodoValue}", completed: false} ){
-    id
-    title
-       
-            completed
-    user{
-      name
-    }
-    
-  }
-  
-}`).then((res) => {
+            makeRequest(createTodoRequest).then((res) => {
                 const duplicatedObject = { ...res.data.createTodo };
                 duplicatedObject.id = nanoid();
+
                 setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
                 setNewTodoValue('');
             });
@@ -82,68 +52,58 @@ const Todos = () => {
     };
 
     const handleSearchTodo = (event: any) => {
-        setIsLoadingSearch(true);
         event.preventDefault();
+
+        setIsLoadingSearch(true);
+
+        const searchTodoQuery = `query SearchQuery { todos(options: { search: {q: "${foundTodoValue}"} }) { data { title completed id user { id email name phone } } } }`;
+
         if (foundTodoValue) {
-            makeRequest(`query SearchQuery{
-                todos(options: {
-                    search: {q: "${foundTodoValue}"}
-                }){
-                    data{
-                        title
-                        completed
-                        id
-                        user{
-                            id
-                            email
-                            name
-                            phone
-                        }
-                    }
-                }
-                
-            }`).then((res) => {
-                if (res.data.todos.data.length) {
-                    setFoundTodos(res.data.todos.data);
-                    setIsLoadingSearch(false);
-                } else {
-                    setRequest((prev) => !prev);
+            makeRequest(searchTodoQuery).then((res) => {
+                const data = res.data.todos.data;
+
+                if (!data.length) {
+                    setRequestSearch((prev) => !prev);
                     setIsLoadingSearch(false);
                 }
+                setFoundTodos(data);
+                setIsLoadingSearch(false);
             });
         }
     };
 
     const handleChangeStatus = (id: string, completed: boolean) => {
+        const changeStatusQuery = `mutation UpdateTodo { updateTodo(id: "${id}", input: { completed: ${completed} }) { id completed } }`;
+
         setCurrentDeleteId(id);
         setIsLoadingCheck(true);
-        makeRequest(`mutation UpdateTodo {
-            updateTodo(id: "${id}", input: { completed: ${completed} }) {
-                id
-                completed
-            }
-        }`).then((res) => {
+
+        makeRequest(changeStatusQuery).then((res) => {
             const updatedTodo = res.data.updateTodo;
+
             setAllTodos((prevTodos: any) =>
                 prevTodos.map((todo: any) =>
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
+
             setFoundTodos((prevTodos: any) =>
                 prevTodos.map((todo: any) =>
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
+
             setIsLoadingCheck(false);
         });
     };
 
     const handleDeleteTodo = (id: string) => {
+        const deleteTodoRequest = `mutation DeleteTodo { deleteTodo(id: "${id}") }`;
+
         setCurrentDeleteId(id);
         setIsLoadingDelete(true);
-        makeRequest(`mutation DeleteTodo{
-  deleteTodo(id: "${id}")
-}`).then(() => {
+
+        makeRequest(deleteTodoRequest).then(() => {
             setAllTodos((prevTodos) => prevTodos.filter((todo: any) => todo.id !== id));
             setFoundTodos((prevTodos: any) => prevTodos.filter((todo: any) => todo.id !== id));
             setIsLoadingDelete(false);
@@ -153,7 +113,7 @@ const Todos = () => {
     const handleChangeValue = (e: any) => {
         if (!e.target.value) {
             setFoundTodos([]);
-            setRequest(false);
+            setRequestSearch(false);
         }
         setFoundTodoValue(e.target.value);
     };
@@ -172,7 +132,6 @@ const Todos = () => {
                 <Checkbox
                     checked={params.row.completed}
                     disabled={isLoadingCheck && currentDeleteId === params.row.id}
-                    {...label}
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite />}
                     onChange={() => handleChangeStatus(params.row.id, !params.row.completed)}
@@ -207,15 +166,16 @@ const Todos = () => {
         { field: 'email', headerName: 'Email', description: 'This is email', sortable: false, width: 160 }
     ];
 
-    const rows = ((foundTodos?.length && foundTodoValue && foundTodos) || allTodos).map((todo) => ({
+    const rows = ((foundTodos.length && foundTodoValue && foundTodos) || allTodos).map((todo) => ({
         delete: 'delete',
         completed: todo.completed,
         id: todo.id,
-        name: todo.user.name,
-        title: todo.title,
-        phone: todo.user.phone,
-        email: todo.user.email
+        name: todo?.user?.name,
+        title: todo?.title,
+        phone: todo?.user?.phone,
+        email: todo?.user?.email
     }));
+
     return (
         <Container>
             <Typography align="center" variant="h2">
@@ -239,6 +199,7 @@ const Todos = () => {
                         value={newTodoValue}
                         onChange={(e) => setNewTodoValue(e.target.value)}
                         fullWidth
+                        helperText="example 'go to home'"
                     />
                     <Button
                         disabled={!newTodoValue}
@@ -267,6 +228,7 @@ const Todos = () => {
                         size="small"
                         value={foundTodoValue}
                         onChange={(e) => handleChangeValue(e)}
+                        helperText="example 'dolor'"
                     />
                     <LoadingButton
                         disabled={!foundTodoValue}
@@ -285,9 +247,9 @@ const Todos = () => {
             <Paper>
                 {isLoadingAllTodos || isLoadingSearch ? (
                     <PageLoader />
-                ) : !foundTodos.length && foundTodoValue && request ? (
+                ) : !foundTodos.length && foundTodoValue && requestSearch ? (
                     <Typography align="center" variant="h6">
-                        No tasks found.
+                        No todos found.
                     </Typography>
                 ) : (
                     <DataGrid
