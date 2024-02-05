@@ -19,16 +19,6 @@ const Todos = () => {
         { id: string; completed: boolean; user: { name: string; phone: string; email: string }; title: string }[]
     >([]);
 
-    const rows = ((foundTodos?.length && foundTodoValue && foundTodos) || allTodos).map((todo) => ({
-        delete: 'delete',
-        completed: todo.completed,
-        id: todo.id,
-        name: todo.user.name,
-        title: todo.title,
-        phone: todo.user.phone,
-        email: todo.user.email
-    }));
-
     useEffect(() => {
         if (!foundTodoValue) {
             makeRequest(`query allTodos{
@@ -105,6 +95,30 @@ const Todos = () => {
         }
     };
 
+    const handleChangeStatus = (id: string, completed: boolean) => {
+        makeRequest(`mutation UpdateTodo {
+            updateTodo(id: "${id}", input: { completed: ${completed} }) {
+                id
+                completed
+            }
+        }`).then((res) => {
+            const updatedTodo = res.data.updateTodo;
+            setAllTodos((prevTodos) =>
+                prevTodos.map((todo) =>
+                    todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
+                )
+            );
+        });
+    };
+
+    const handleChangeValue = (e: any) => {
+        if (!e.target.value) {
+            setFoundTodos([]);
+            setRequest(false);
+        }
+        setFoundTodoValue(e.target.value);
+    };
+
     const columns: GridColDef[] = [
         {
             field: 'favorite',
@@ -121,6 +135,7 @@ const Todos = () => {
                     {...label}
                     icon={<FavoriteBorder />}
                     checkedIcon={<Favorite />}
+                    onChange={() => handleChangeStatus(params.row.id, !params.row.completed)}
                 />
             )
         },
@@ -146,14 +161,15 @@ const Todos = () => {
         { field: 'email', headerName: 'Email', description: 'This is email', sortable: false, width: 160 }
     ];
 
-    const handleChangeValue = (e: any) => {
-        if (!e.target.value) {
-            setFoundTodos([]);
-            setRequest(false);
-        }
-        setFoundTodoValue(e.target.value);
-    };
-
+    const rows = ((foundTodos?.length && foundTodoValue && foundTodos) || allTodos).map((todo) => ({
+        delete: 'delete',
+        completed: todo.completed,
+        id: todo.id,
+        name: todo.user.name,
+        title: todo.title,
+        phone: todo.user.phone,
+        email: todo.user.email
+    }));
     return (
         <Container>
             <Typography align="center" variant="h2">
@@ -232,6 +248,7 @@ const Todos = () => {
                         }}
                         pageSizeOptions={[5, 10, 20, 100]}
                         autoHeight
+                        rowSelection={false}
                     />
                 )}
             </Paper>
