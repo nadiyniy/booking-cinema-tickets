@@ -10,10 +10,10 @@ const viteConfig = defineViteConfig({
         svgr({
             include: '**/*.svg?react'
         })
-    ],
-    build: {
-        chunkSizeWarningLimit: 1100
-    }
+    ]
+    // build: {
+    //     chunkSizeWarningLimit: 1100
+    // }
 });
 
 const vitestConfig = {

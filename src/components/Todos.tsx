@@ -5,7 +5,7 @@ import { SearchTodo, TodosList } from '.';
 
 import { TodoProps } from '../types';
 import { BoxTodos } from '../styled/TodosStyled';
-import CreateTodo from './CreateTodo';
+import { CreateTodo } from '.';
 
 const Todos = () => {
     const [allTodos, setAllTodos] = useState<TodoProps[]>([]);

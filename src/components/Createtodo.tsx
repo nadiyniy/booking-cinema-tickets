@@ -5,13 +5,8 @@ import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 
 import { makeRequest } from '../services/apiTodos';
-import { TodoProps } from '../types';
 
-type CreateTodoProps = {
-    setAllTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
-};
-
-const CreateTodo: React.FC<CreateTodoProps> = ({ setAllTodos }) => {
+const CreateTodo = ({ setAllTodos }: any) => {
     const [newTodoValue, setNewTodoValue] = useState<string>('');
     const [isLoadingCreateTodo, setIsLoadingCreateTodo] = useState<boolean>(false);
 
@@ -25,7 +20,7 @@ const CreateTodo: React.FC<CreateTodoProps> = ({ setAllTodos }) => {
                 const duplicatedObject = { ...res.data.createTodo };
                 duplicatedObject.id = nanoid();
 
-                setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
+                setAllTodos((prevTodos: any) => [duplicatedObject, ...prevTodos]);
                 setNewTodoValue('');
                 setIsLoadingCreateTodo(false);
             });
