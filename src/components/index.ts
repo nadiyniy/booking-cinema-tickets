@@ -15,3 +15,4 @@ export { default as TodosList } from './TodosList';
 export { default as TrendingMovies } from './TrendingMovies';
 export { default as ChartJSUser } from './ChartJSUser';
 export { default as BarChart } from './ChartJS/BarChart';
+export { default as LineChart } from './ChartJS/LineChart';
