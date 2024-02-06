@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { makeRequest } from '../services/apiTodos';
 
 const CreateTodo = ({ setAllTodos }: any) => {
-    const [newTodoValue, setNewTodoValue] = useState<string>('');
-    const [isLoadingCreateTodo, setIsLoadingCreateTodo] = useState<boolean>(false);
+    const [newTodoValue, setNewTodoValue] = useState('');
+    const [isLoadingCreateTodo, setIsLoadingCreateTodo] = useState(false);
 
     const handleCreateTodo = (event: any) => {
         event.preventDefault();
@@ -55,7 +55,6 @@ const CreateTodo = ({ setAllTodos }: any) => {
                 variant="contained"
                 startIcon={<AddIcon />}
                 type="submit"
-                sx={{ minWidth: '155px' }}
             >
                 Create todo
             </LoadingButton>

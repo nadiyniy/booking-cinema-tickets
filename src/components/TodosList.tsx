@@ -49,7 +49,7 @@ const TodosList = ({
     };
 
     const handleChangeStatus = (id: string, completed: boolean) => {
-        const changeStatusQuery = `mutation UpdateTodo { updateTodo(id: "${id}", input: { completed: ${completed} }) { completed } }`;
+        const changeStatusQuery = `mutation ChangeStatus { updateTodo(id: "${id}", input: {completed: ${completed}}) {id completed} }`;
 
         setCurrentDeleteId(id);
         setIsLoadingCheck(true);
