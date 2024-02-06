@@ -9,5 +9,3 @@ export type { SessionListProps } from './SessionListTypes';
 export type { SeatState, SessionState, TrendingMoviesState } from './StoreTypes';
 export type { TodoProps } from './TodosTypes';
 export type { MovieProps, MovieRowProps } from './TrendingMoviesTypes';
-export type {} from './SelectDateTypes';
-export type {} from './SelectDateTypes';

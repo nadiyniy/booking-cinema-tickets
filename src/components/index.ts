@@ -13,3 +13,5 @@ export { default as SessionList } from './SessionList';
 export { default as Todos } from './Todos';
 export { default as TodosList } from './TodosList';
 export { default as TrendingMovies } from './TrendingMovies';
+export { default as ChartJSUser } from './ChartJSUser';
+export { default as BarChart } from './ChartJS/BarChart';
