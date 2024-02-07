@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
+
 import { fetchTrendingMovies } from '../../services/apiMovies';
-import { Store, TrendingMoviesState } from '../../types/StoreTypes';
+import { Store, TrendingMoviesState } from '../../types';
 
 enum TrendingMoviesEnum {
     TRAINING_MOVIES_SUCCESS = 'TRAINING_MOVIES_SUCCESS',

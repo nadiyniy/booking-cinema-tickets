@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { getReservationsSeat, getSessionDetails } from '../../services/api';
-import { SeatState, Store } from '../../types/StoreTypes';
+import { SeatState, Store } from '../../types';
 
 enum SeatActionEnum {
     SET_SELECTED_SEAT = 'SET_SELECTED_SEAT',

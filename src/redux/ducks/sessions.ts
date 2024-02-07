@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { getDate, getSessions } from '../../services/api';
-import { SessionState, Store } from '../../types/StoreTypes';
+import { SessionState, Store } from '../../types';
 
 enum SessionStateEnum {
     SET_SELECTED_DATE = 'SET_SELECTED_DATE',

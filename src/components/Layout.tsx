@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import { AppBar, Button, Container } from '@mui/material';
 
 import { PageLoader, SelectDate } from '.';

@@ -1,5 +1,5 @@
-import { DialogActions, IconButton } from '@mui/material';
 import styled from 'styled-components';
+import { DialogActions, IconButton } from '@mui/material';
 
 export const IconButtonStyled = styled(IconButton)`
     && {

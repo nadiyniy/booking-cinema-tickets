@@ -1,9 +1,9 @@
-import { Paper, Checkbox, Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
+import { Paper, Checkbox, Typography } from '@mui/material';
+import { GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
+import { LoadingButton } from '@mui/lab';
 
 import { PageLoader } from '.';
 

@@ -4,7 +4,7 @@ const theMovieDBApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
 });
 
-const API_KEY = '13f507f7afd2e84a62cca8b12f55dea4'; //import.meta.env.VITE_API_KEY;
+const API_KEY = '13f507f7afd2e84a62cca8b12f55dea4';
 
 export type timeWindowType = 'day' | 'week';
 export type ParamsType = {

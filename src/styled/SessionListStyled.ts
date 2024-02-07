@@ -1,5 +1,5 @@
-import { Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { Paper, Typography } from '@mui/material';
 
 import RootTheme from './RootTheme';
 

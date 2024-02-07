@@ -1,5 +1,5 @@
-import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { makeRequest } from '../services/apiTodos';
@@ -34,12 +34,12 @@ const SearchTodo = ({
         }
     };
 
-    const handleChangeValue = (e: any) => {
-        if (!e.target.value) {
+    const handleChangeValue = (event: any) => {
+        if (!event.target.value) {
             setFoundTodos([]);
             setRequestSearch(false);
         }
-        setFoundTodoValue(e.target.value);
+        setFoundTodoValue(event.target.value);
     };
 
     return (
@@ -49,7 +49,7 @@ const SearchTodo = ({
                 label="Search todo"
                 size="small"
                 value={foundTodoValue}
-                onChange={(e) => handleChangeValue(e)}
+                onChange={(event) => handleChangeValue(event)}
                 helperText="example 'dolor'"
             />
             <LoadingButton
