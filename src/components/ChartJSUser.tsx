@@ -38,6 +38,7 @@ const ChartJSUser = () => {
     });
     const [userDataLine] = useState({
         labels: sortedData.map((data) => data.year),
+        options: { elements: { line: { tension: 0.5 } } },
         datasets: [
             {
                 label: 'Users Gains',
@@ -88,7 +89,7 @@ const ChartJSUser = () => {
                         <BarChart chartData={userDataBar} />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <LineChart chartData={userDataLine} />
+                        <LineChart chartData={userDataLine} chartOptions={userDataLine.options} />
                     </Grid>
                     <Grid item xs={6}>
                         <DoughnutChart chartData={userDataDoughnut} />
