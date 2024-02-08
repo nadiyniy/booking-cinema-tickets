@@ -12,3 +12,4 @@ export type { MovieProps, MovieRowProps } from './TrendingMoviesTypes';
 export type { Store } from './StoreTypes';
 export type { SearchTodoProps } from './SearchTodoTypes';
 export type { CreateTodoProps } from './CreateTodoTypes';
+export type { SessionActionTypes } from './SessionsType';
