@@ -17,7 +17,8 @@ export type MovieProps = {
 };
 
 export type MovieRowProps = {
-    poster?: any;
+    poster?: React.ReactNode;
     title?: string;
-    vote_average?: number;
+    vote_average?: string;
+    id: number;
 };

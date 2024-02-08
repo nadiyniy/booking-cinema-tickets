@@ -26,7 +26,13 @@ import { PageLoader, MovieDetails } from '.';
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
 import { MovieRowProps } from '../types';
 
-const HighlightedCell = ({ value, style, ...restProps }: any) => (
+interface HighlightedCellProps {
+    value: number;
+    style: React.CSSProperties;
+    restProps: Table.DataCellProps;
+}
+
+const HighlightedCell: React.FC<HighlightedCellProps> = ({ value, style, restProps }) => (
     <Table.Cell {...restProps} style={{ backgroundColor: value < 7 ? 'yellow' : undefined, ...style }}>
         <span>{value}</span>
     </Table.Cell>
@@ -40,7 +46,11 @@ const Cell = (props: any) => {
     return <Table.Cell {...props} />;
 };
 
-const RowDetail = ({ row }: any) => {
+interface RowDetailProps {
+    row: MovieRowProps;
+}
+
+const RowDetail: React.FC<RowDetailProps> = ({ row }) => {
     return <MovieDetails row={row} />;
 };
 
@@ -92,7 +102,7 @@ const TrendingMovies = () => {
             )
         }));
 
-        setRows(getRows);
+        setRows(getRows || []);
     }, [trendingMovies]);
 
     return (
