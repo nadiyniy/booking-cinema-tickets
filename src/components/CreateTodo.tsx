@@ -5,8 +5,9 @@ import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { makeRequest } from '../services/apiTodos';
+import { CreateTodoProps } from '../types';
 
-const CreateTodo = ({ setAllTodos }: any) => {
+const CreateTodo = ({ setAllTodos }: CreateTodoProps) => {
     const [newTodoValue, setNewTodoValue] = useState<string>('');
     const [isLoadingCreateTodo, setIsLoadingCreateTodo] = useState(false);
 
@@ -20,7 +21,7 @@ const CreateTodo = ({ setAllTodos }: any) => {
                 const duplicatedObject = { ...res.data.createTodo };
                 duplicatedObject.id = nanoid();
 
-                setAllTodos((prevTodos: any) => [duplicatedObject, ...prevTodos]);
+                setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
                 setNewTodoValue('');
                 setIsLoadingCreateTodo(false);
             });

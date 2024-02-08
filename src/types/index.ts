@@ -10,3 +10,5 @@ export type { SeatState, SessionState, TrendingMoviesState } from './StoreTypes'
 export type { TodoProps } from './TodosTypes';
 export type { MovieProps, MovieRowProps } from './TrendingMoviesTypes';
 export type { Store } from './StoreTypes';
+export type { SearchTodoProps } from './SearchTodoTypes';
+export type { CreateTodoProps } from './CreateTodoTypes';

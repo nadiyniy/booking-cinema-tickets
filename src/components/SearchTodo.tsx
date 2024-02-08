@@ -4,6 +4,7 @@ import { LoadingButton } from '@mui/lab';
 
 import { makeRequest } from '../services/apiTodos';
 import { BoxSearchTodo } from '../styled/SearchTodoStyled';
+import { SearchTodoProps } from '../types';
 
 const SearchTodo = ({
     setFoundTodoValue,
@@ -12,8 +13,8 @@ const SearchTodo = ({
     foundTodoValue,
     setFoundTodos,
     isLoadingSearch
-}: any) => {
-    const handleSearchTodo = (event: any) => {
+}: SearchTodoProps) => {
+    const handleSearchTodo = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setIsLoadingSearch(true);
@@ -34,7 +35,7 @@ const SearchTodo = ({
         }
     };
 
-    const handleChangeValue = (event: any) => {
+    const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (!event.target.value) {
             setFoundTodos([]);
             setRequestSearch(false);
@@ -43,27 +44,29 @@ const SearchTodo = ({
     };
 
     return (
-        <BoxSearchTodo component="form" onSubmit={(event) => handleSearchTodo(event)}>
-            <TextField
-                fullWidth
-                label="Search todo"
-                size="small"
-                value={foundTodoValue}
-                onChange={(event) => handleChangeValue(event)}
-                helperText="example 'dolor'"
-            />
-            <LoadingButton
-                disabled={!foundTodoValue}
-                loading={isLoadingSearch}
-                loadingPosition="start"
-                fullWidth
-                variant="contained"
-                startIcon={<SearchIcon />}
-                type="submit"
-            >
-                Search todo
-            </LoadingButton>
-        </BoxSearchTodo>
+        <form onSubmit={(event) => handleSearchTodo(event)}>
+            <BoxSearchTodo>
+                <TextField
+                    fullWidth
+                    label="Search todo"
+                    size="small"
+                    value={foundTodoValue}
+                    onChange={(event) => handleChangeValue(event)}
+                    helperText="example 'dolor'"
+                />
+                <LoadingButton
+                    disabled={!foundTodoValue}
+                    loading={isLoadingSearch}
+                    loadingPosition="start"
+                    fullWidth
+                    variant="contained"
+                    startIcon={<SearchIcon />}
+                    type="submit"
+                >
+                    Search todo
+                </LoadingButton>
+            </BoxSearchTodo>
+        </form>
     );
 };
 
