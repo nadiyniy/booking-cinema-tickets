@@ -1,4 +1,4 @@
-import { TodoProps } from './TodosTypes';
+import { TodoProps } from '.';
 
 export type SearchTodoProps = {
     setFoundTodoValue: React.Dispatch<React.SetStateAction<string>>;

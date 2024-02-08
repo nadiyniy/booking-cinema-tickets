@@ -1,4 +1,4 @@
-import { MovieProps } from './TrendingMoviesTypes';
+import { MovieProps } from '.';
 
 enum TrendingMoviesEnum {
     LOAD_TRENDING_MOVIES = 'LOAD_TRENDING_MOVIES',

@@ -1,16 +1,11 @@
 import axios from 'axios';
+import { ParamsType, timeWindowType } from '../types';
 
 const theMovieDBApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
 });
 
 const API_KEY = '13f507f7afd2e84a62cca8b12f55dea4';
-
-export type timeWindowType = 'day' | 'week';
-export type ParamsType = {
-    page?: number;
-    query?: string;
-};
 
 export const fetchTrendingMovies = async (
     time_window: timeWindowType = 'day',
