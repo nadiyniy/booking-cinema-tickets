@@ -24,54 +24,26 @@ import {
 import { PageLoader, MovieDetails } from '.';
 
 import { selectIsLoading, selectTotalPages, selectTrendingMovies } from '../redux/ducks/movies';
-import { MovieRowProps } from '../types';
-
-interface HighlightedCellProps {
-    value: number;
-    style: React.CSSProperties;
-    restProps: Table.DataCellProps;
-}
-
-const HighlightedCell: React.FC<HighlightedCellProps> = ({ value, style, restProps }) => (
-    <Table.Cell {...restProps} style={{ backgroundColor: value < 7 ? 'yellow' : undefined, ...style }}>
-        <span>{value}</span>
-    </Table.Cell>
-);
-
-const Cell = (props: any) => {
-    const { column } = props;
-    if (column.name === 'vote_average') {
-        return <HighlightedCell {...props} />;
-    }
-    return <Table.Cell {...props} />;
-};
-
-interface RowDetailProps {
-    row: MovieRowProps;
-}
-
-const RowDetail: React.FC<RowDetailProps> = ({ row }) => {
-    return <MovieDetails row={row} />;
-};
+import { MovieProps, StateType } from '../types';
 
 const TrendingMovies = () => {
-    const [rows, setRows] = useState<MovieRowProps[]>([]);
-    const [columns] = useState([
-        { name: 'vote_average', title: 'Vote average (is sortable)' },
-        { name: 'title', title: 'Title' },
-        { name: 'poster', title: 'Poster' },
-        { name: 'id', title: 'ID' }
-    ]);
-    const [tableColumnExtensions] = useState<Table.ColumnExtension[]>([
+    const [state, setState] = useState<StateType>({
+        rows: [],
+        columns: [
+            { name: 'vote_average', title: 'Vote average (is sortable)' },
+            { name: 'title', title: 'Title' },
+            { name: 'poster', title: 'Poster' },
+            { name: 'id', title: 'ID' }
+        ]
+    });
+
+    const [tableColumnExtensions] = useState<Table.ColumnExtension[] | undefined>([
         { columnName: 'poster', align: 'right' },
         { columnName: 'vote_average', wordWrapEnabled: true }
     ]);
-    const [sortingStateColumnExtensions] = useState([
-        { columnName: 'title', sortingEnabled: false },
-        { columnName: 'poster', sortingEnabled: false },
-        { columnName: 'vote_average', sortingEnabled: true }
-    ]);
+
     const [sorting, setSorting] = useState<Sorting[]>([]);
+    const { rows, columns } = state;
 
     const trendingMovies = useSelector(selectTrendingMovies);
     const isLoading = useSelector(selectIsLoading);
@@ -85,24 +57,25 @@ const TrendingMovies = () => {
     }, [currentPage]);
 
     useEffect(() => {
-        const getRows = trendingMovies?.map((movie: any) => ({
-            vote_average: movie.vote_average.toFixed(1),
-            id: movie.id,
-            title: movie.original_title ?? movie.title ?? movie.name,
-            poster: (
-                <img
-                    width={40}
-                    style={{ marginLeft: 'auto' }}
-                    src={
-                        movie?.poster_path
-                            ? `https://image.tmdb.org/t/p/w500${movie?.poster_path}`
-                            : '/public/images.png'
-                    }
-                />
-            )
-        }));
-
-        setRows(getRows || []);
+        if (trendingMovies) {
+            const getRows = trendingMovies.map((movie: MovieProps) => ({
+                vote_average: movie.vote_average.toFixed(1),
+                id: movie.id,
+                title: movie.original_title ?? movie.title ?? movie.name,
+                poster: (
+                    <img
+                        width={40}
+                        style={{ marginLeft: 'auto' }}
+                        src={
+                            movie?.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${movie?.poster_path}`
+                                : '/public/images.png'
+                        }
+                    />
+                )
+            }));
+            setState((prevState) => ({ ...prevState, rows: getRows }));
+        }
     }, [trendingMovies]);
 
     return (
@@ -127,13 +100,19 @@ const TrendingMovies = () => {
                             <SortingState
                                 sorting={sorting}
                                 onSortingChange={setSorting}
-                                columnExtensions={sortingStateColumnExtensions}
+                                columnExtensions={[
+                                    { columnName: 'title', sortingEnabled: false },
+                                    { columnName: 'poster', sortingEnabled: false },
+                                    { columnName: 'vote_average', sortingEnabled: true },
+                                    { columnName: 'id', sortingEnabled: false }
+                                ]}
                             />
                             <IntegratedSorting />
-                            <Table cellComponent={Cell} columnExtensions={tableColumnExtensions} />
+                            <Table columnExtensions={tableColumnExtensions} />
+
                             <TableHeaderRow showSortingControls />
                             <RowDetailState />
-                            <TableRowDetail contentComponent={RowDetail} />
+                            <TableRowDetail contentComponent={({ row }) => <MovieDetails row={row} />} />
                             <Toolbar />
                             <SearchPanel />
                             <PagingPanel />
