@@ -14,3 +14,4 @@ export type { SearchTodoProps } from './SearchTodoTypes';
 export type { CreateTodoProps } from './CreateTodoTypes';
 export type { SessionActionTypes } from './SessionsType';
 export type { SeatActionTypes } from './SeatsTypes';
+export type { TrendingMoviesActionTypes } from './MoviesTypes';

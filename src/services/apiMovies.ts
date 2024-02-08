@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 const theMovieDBApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
@@ -17,13 +17,14 @@ export const fetchTrendingMovies = async (
     page: number = 1,
     params?: ParamsType
 ) => {
-    const { data } = await theMovieDBApi.get(`trending/movie/${time_window}`, {
+    const data = await theMovieDBApi.get(`trending/movie/${time_window}`, {
         params: {
             ...params,
             api_key: API_KEY,
             page
         }
     });
+
     return data;
 };
 

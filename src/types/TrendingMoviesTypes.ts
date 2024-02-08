@@ -2,7 +2,7 @@ export type MovieProps = {
     adult?: boolean;
     backdrop_path?: string;
     id?: number;
-    title?: any;
+    title?: string;
     original_language?: string;
     original_title?: string;
     overview?: string;

@@ -81,7 +81,7 @@ const TrendingMovies = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'LOAD_TRAINING_MOVIES', payload: { time: 'day', page: currentPage + 1 } });
+        dispatch({ type: 'LOAD_TRENDING_MOVIES', payload: { time: 'day', page: currentPage + 1 } });
     }, [currentPage]);
 
     useEffect(() => {

@@ -4,7 +4,7 @@ const todosApi = axios.create({
     baseURL: 'https://graphqlzero.almansi.me/api'
 });
 
-export const makeRequest = async (query: any) => {
+export const makeRequest = async (query: string) => {
     try {
         const { data } = await todosApi.post('', {
             query: query

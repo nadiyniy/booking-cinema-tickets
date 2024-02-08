@@ -1,11 +1,11 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchTrendingMovies } from '../../services/apiMovies';
-import { Store, TrendingMoviesState } from '../../types';
+import { Store, TrendingMoviesActionTypes, TrendingMoviesState } from '../../types';
 
 enum TrendingMoviesEnum {
-    TRAINING_MOVIES_SUCCESS = 'TRAINING_MOVIES_SUCCESS',
-    LOAD_TRAINING_MOVIES = 'LOAD_TRAINING_MOVIES'
+    TRENDING_MOVIES_SUCCESS = 'TRENDING_MOVIES_SUCCESS',
+    LOAD_TRENDING_MOVIES = 'LOAD_TRENDING_MOVIES'
 }
 
 const initialState: TrendingMoviesState = {
@@ -15,11 +15,11 @@ const initialState: TrendingMoviesState = {
     isLoading: false
 };
 
-export default function reducer(state = initialState, action: any) {
+export default function reducer(state = initialState, action: TrendingMoviesActionTypes) {
     switch (action.type) {
-        case TrendingMoviesEnum.LOAD_TRAINING_MOVIES:
+        case TrendingMoviesEnum.LOAD_TRENDING_MOVIES:
             return { ...state, isLoading: true };
-        case TrendingMoviesEnum.TRAINING_MOVIES_SUCCESS:
+        case TrendingMoviesEnum.TRENDING_MOVIES_SUCCESS:
             return {
                 ...state,
                 trendingMovies: action.payload.results,
@@ -32,15 +32,13 @@ export default function reducer(state = initialState, action: any) {
     }
 }
 
-export function* workerTrendingMovies(action: any): Generator<any, void, any> {
-    const { time, page } = action.payload;
-    const data = yield call(fetchTrendingMovies, time, page);
-
-    yield put({ type: TrendingMoviesEnum.TRAINING_MOVIES_SUCCESS, payload: data });
+export function* workerTrendingMovies() {
+    const { data } = yield call(fetchTrendingMovies);
+    yield put({ type: 'TRENDING_MOVIES_SUCCESS', payload: data });
 }
 
 export function* watchTrendingMovies() {
-    yield all([takeLatest(TrendingMoviesEnum.LOAD_TRAINING_MOVIES, workerTrendingMovies)]);
+    yield all([takeLatest('LOAD_TRENDING_MOVIES', workerTrendingMovies)]);
 }
 
 export function* trendingMoviesSaga() {
