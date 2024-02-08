@@ -3,8 +3,8 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 ChartJS.register();
 
-const LineChart = ({ chartData, chartOptions }: any) => {
-    return <Line data={chartData} options={chartOptions} />;
+const LineChart = ({ chartData }: any) => {
+    return <Line data={chartData} />;
 };
 
 export default LineChart;
