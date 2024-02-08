@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 const theMovieDBApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
