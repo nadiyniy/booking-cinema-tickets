@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import PageLoader from './PageLoader';
+import { PageLoader } from '.';
 
 import { fetchMovieById } from '../services/apiMovies';
-import { MovieDetailsTypes } from '../types/MovieDetailsTypes';
+import { MovieDetailsTypes } from '../types';
 import { StyledContent } from '../styled/MovieDetailsStyled';
 
-const MovieDetails = ({ row }: any) => {
+export type MovieDetailsProps = {
+    row: { id: number };
+};
+
+const MovieDetails = ({ row }: MovieDetailsProps) => {
     const [movieDetails, setMovieDetails] = useState<MovieDetailsTypes | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 

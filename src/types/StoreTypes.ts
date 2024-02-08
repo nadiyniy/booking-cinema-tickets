@@ -1,3 +1,5 @@
+import { MovieProps } from '.';
+
 export type SeatState = {
     selectedSeat: string;
     reservedSeats: string[];
@@ -15,8 +17,9 @@ export type SessionState = {
     error: string | null;
     isLoading: boolean;
 };
+
 export type TrendingMoviesState = {
-    trendingMovies: string[];
+    trendingMovies: MovieProps[];
     isLoading: boolean;
     totalPages?: number | null;
     totalResults?: number | null;

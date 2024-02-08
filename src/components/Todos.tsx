@@ -1,102 +1,46 @@
-import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { Container, Typography } from '@mui/material';
+
+import { SearchTodo, TodosList, CreateTodo } from '.';
+
+import { TodoProps } from '../types';
+import { BoxTodos } from '../styled/TodosStyled';
 
 const Todos = () => {
-    const [newTodo, setNewTodo] = useState('');
-    const [foundTodo, setFoundTodo] = useState('');
+    const [allTodos, setAllTodos] = useState<TodoProps[]>([]);
+    const [foundTodoValue, setFoundTodoValue] = useState('');
+    const [foundTodos, setFoundTodos] = useState<TodoProps[]>([]);
+    const [requestSearch, setRequestSearch] = useState(false);
+    const [isLoadingAllTodos, setIsLoadingAllTodos] = useState(false);
+    const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
-    const handleCreateTodo = (event: any) => {
-        event.preventDefault();
-        console.log('створене todo:', newTodo);
-        setNewTodo('');
-    };
-
-    const handleSearchTodo = (event: any) => {
-        event.preventDefault();
-        console.log('знайдене Todo:', foundTodo);
-        setFoundTodo('');
-    };
-
-    <Box component="form" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-        <TextField label="New todo" size="small" />
-        <Button variant="contained" startIcon={<AddIcon />}>
-            Create todo
-        </Button>
-    </Box>;
     return (
         <Container>
             <Typography align="center" variant="h2">
                 Todos GraphQL
             </Typography>
-            <Box sx={{ display: 'flex', gap: '20px', mb: '10px' }}>
-                <Box
-                    component="form"
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '20px',
-                        flexGrow: 1
-                    }}
-                    onSubmit={(event) => handleCreateTodo(event)}
-                >
-                    <TextField
-                        label="New todo"
-                        size="small"
-                        value={newTodo}
-                        onChange={(e) => setNewTodo(e.target.value)}
-                        fullWidth
-                    />
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        startIcon={<AddIcon />}
-                        type="submit"
-                        sx={{ minWidth: '155px' }}
-                    >
-                        Create todo
-                    </Button>
-                </Box>
-                <Box
-                    component="form"
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '20px'
-                    }}
-                    onSubmit={(event) => handleSearchTodo(event)}
-                >
-                    <TextField
-                        fullWidth
-                        label="Search todo"
-                        size="small"
-                        value={foundTodo}
-                        onChange={(e) => setFoundTodo(e.target.value)}
-                    />
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        startIcon={<SearchIcon />}
-                        type="submit"
-                        sx={{ minWidth: '155px' }}
-                    >
-                        Search todo
-                    </Button>
-                </Box>
-            </Box>
-            <Paper>
-                <ul>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                </ul>
-            </Paper>
+            <BoxTodos>
+                <CreateTodo setAllTodos={setAllTodos} />
+                <SearchTodo
+                    setFoundTodoValue={setFoundTodoValue}
+                    setRequestSearch={setRequestSearch}
+                    setIsLoadingSearch={setIsLoadingSearch}
+                    foundTodoValue={foundTodoValue}
+                    setFoundTodos={setFoundTodos}
+                    isLoadingSearch={isLoadingSearch}
+                />
+            </BoxTodos>
+            <TodosList
+                setIsLoadingAllTodos={setIsLoadingAllTodos}
+                foundTodoValue={foundTodoValue}
+                setFoundTodos={setFoundTodos}
+                allTodos={allTodos}
+                setAllTodos={setAllTodos}
+                foundTodos={foundTodos}
+                requestSearch={requestSearch}
+                isLoadingAllTodos={isLoadingAllTodos}
+                isLoadingSearch={isLoadingSearch}
+            />
         </Container>
     );
 };

@@ -1,5 +1,5 @@
-import { Box, MenuItem } from '@mui/material';
 import styled from 'styled-components';
+import { Box, MenuItem } from '@mui/material';
 
 export const BoxStyled = styled(Box)`
     && {
