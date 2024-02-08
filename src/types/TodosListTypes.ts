@@ -1,9 +1,9 @@
 import { TodoProps } from './TodosTypes';
 
 export type TodosListProps = {
-    requestSearch: string;
+    requestSearch: boolean;
     isLoadingAllTodos: boolean;
-    foundTodos: string[];
+    foundTodos: TodoProps[];
     allTodos: TodoProps[];
     setFoundTodos: React.Dispatch<React.SetStateAction<TodoProps[]>>;
     isLoadingSearch: boolean;
