@@ -1,7 +1,7 @@
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { Box, Paper } from '@mui/material';
 
-import { SeatListStyledProps } from '../types/SeatListStyledTypes';
+import { SeatListStyledProps } from '../types';
 import RootTheme from './RootTheme';
 
 const { primary, primaryWhite, primaryWhiteChoice, primaryHover, primaryWhiteSelected } = RootTheme.colors;

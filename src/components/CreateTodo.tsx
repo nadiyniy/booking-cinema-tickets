@@ -1,16 +1,17 @@
-import { Box, TextField } from '@mui/material';
+import { FormEvent, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { nanoid } from 'nanoid';
+import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useState } from 'react';
 
 import { makeRequest } from '../services/apiTodos';
+import { CreateTodoProps } from '../types';
 
-const CreateTodo = ({ setAllTodos }: any) => {
-    const [newTodoValue, setNewTodoValue] = useState('');
+const CreateTodo = ({ setAllTodos }: CreateTodoProps) => {
+    const [newTodoValue, setNewTodoValue] = useState<string>('');
     const [isLoadingCreateTodo, setIsLoadingCreateTodo] = useState(false);
 
-    const handleCreateTodo = (event: any) => {
+    const handleCreateTodo = (event: FormEvent) => {
         event.preventDefault();
         setIsLoadingCreateTodo(true);
         const createTodoRequest = `mutation CreateTodo { createTodo(input: { title: "${newTodoValue}", completed: false } ){ id title completed user { name } } }`;
@@ -20,7 +21,7 @@ const CreateTodo = ({ setAllTodos }: any) => {
                 const duplicatedObject = { ...res.data.createTodo };
                 duplicatedObject.id = nanoid();
 
-                setAllTodos((prevTodos: any) => [duplicatedObject, ...prevTodos]);
+                setAllTodos((prevTodos) => [duplicatedObject, ...prevTodos]);
                 setNewTodoValue('');
                 setIsLoadingCreateTodo(false);
             });
@@ -43,7 +44,7 @@ const CreateTodo = ({ setAllTodos }: any) => {
                 label="New todo"
                 size="small"
                 value={newTodoValue}
-                onChange={(e) => setNewTodoValue(e.target.value)}
+                onChange={(event) => setNewTodoValue(event.target.value)}
                 fullWidth
                 helperText="example 'go to home'"
             />

@@ -1,13 +1,14 @@
-import { Paper, Checkbox, Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
+import { Paper, Checkbox, Typography } from '@mui/material';
+import { GridColDef, GridDeleteIcon } from '@mui/x-data-grid';
+import { LoadingButton } from '@mui/lab';
 
 import { PageLoader } from '.';
 
 import { makeRequest } from '../services/apiTodos';
+import { TodoProps, TodosListProps } from '../types';
 
 const TodosList = ({
     requestSearch,
@@ -19,7 +20,7 @@ const TodosList = ({
     foundTodoValue,
     setAllTodos,
     setIsLoadingAllTodos
-}: any) => {
+}: TodosListProps) => {
     const [currentDeleteId, setCurrentDeleteId] = useState('');
     const [isLoadingDelete, setIsLoadingDelete] = useState(false);
     const [isLoadingCheck, setIsLoadingCheck] = useState(false);
@@ -42,8 +43,8 @@ const TodosList = ({
         setIsLoadingDelete(true);
 
         makeRequest(deleteTodoRequest).then(() => {
-            setAllTodos((prevTodos: any) => prevTodos.filter((todo: any) => todo.id !== id));
-            setFoundTodos((prevTodos: any) => prevTodos.filter((todo: any) => todo.id !== id));
+            setAllTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+            setFoundTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
             setIsLoadingDelete(false);
         });
     };
@@ -57,14 +58,14 @@ const TodosList = ({
         makeRequest(changeStatusQuery).then((res) => {
             const updatedTodo = res.data.updateTodo;
 
-            setAllTodos((prevTodos: any) =>
-                prevTodos.map((todo: any) =>
+            setAllTodos((prevTodos) =>
+                prevTodos.map((todo) =>
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
 
-            setFoundTodos((prevTodos: any) =>
-                prevTodos.map((todo: any) =>
+            setFoundTodos((prevTodos) =>
+                prevTodos.map((todo) =>
                     todo.id === updatedTodo.id ? { ...todo, completed: updatedTodo.completed } : todo
                 )
             );
@@ -121,7 +122,7 @@ const TodosList = ({
         { field: 'email', headerName: 'Email', description: 'This is email', sortable: false, width: 160 }
     ];
 
-    const rows = ((foundTodos.length && foundTodoValue && foundTodos) || allTodos).map((todo: any) => ({
+    const rows = ((foundTodos.length && foundTodoValue && foundTodos) || allTodos).map((todo: TodoProps) => ({
         delete: 'delete',
         completed: todo.completed,
         id: todo.id,
