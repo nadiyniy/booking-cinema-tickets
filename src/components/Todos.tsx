@@ -1,5 +1,10 @@
-import { Container, Typography } from '@mui/material';
 import { useState } from 'react';
+import { Container, Typography } from '@mui/material';
+
+import { SearchTodo, TodosList, CreateTodo } from '.';
+
+import { TodoProps } from '../types';
+import { BoxTodos } from '../styled/TodosStyled';
 
 import { SearchTodo, TodosList } from '.';
 

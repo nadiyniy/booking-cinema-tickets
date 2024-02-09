@@ -1,5 +1,5 @@
-import { Button, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
+import { Button, Typography } from '@mui/material';
 
 import { ConfirmSeatProps } from '../types';
 import RootTheme from '../styled/RootTheme';

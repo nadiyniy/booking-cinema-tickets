@@ -1,6 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
 
-import ConfirmSeat from '../components/ConfirmSeat';
+import { ConfirmSeat } from '../components';
 
 afterEach(() => {
     cleanup();
