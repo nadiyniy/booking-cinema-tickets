@@ -11,12 +11,18 @@ const sortedData = dataSet.slice().sort((a, b) => a.year - b.year);
 defaults.responsive = true;
 
 defaults.plugins.title.display = true;
-// defaults.plugins.title.align = 'start';
 defaults.plugins.title.color = 'black';
 
 const ChartJSUser = () => {
     const [userDataBar] = useState({
         labels: sortedData.map((data) => data.year),
+        options: {
+            plugins: {
+                title: {
+                    text: 'Chart Bar'
+                }
+            }
+        },
         datasets: [
             {
                 label: 'Users Gained',
@@ -38,7 +44,14 @@ const ChartJSUser = () => {
     });
     const [userDataLine] = useState({
         labels: sortedData.map((data) => data.year),
-        options: { elements: { line: { tension: 0.5 } } },
+        options: {
+            elements: { line: { tension: 0.5 } },
+            plugins: {
+                title: {
+                    text: 'Chart Line'
+                }
+            }
+        },
         datasets: [
             {
                 label: 'Users Gains',
@@ -59,6 +72,14 @@ const ChartJSUser = () => {
     });
     const [userDataDoughnut] = useState({
         labels: sortedData.map((data) => data.year),
+
+        options: {
+            plugins: {
+                title: {
+                    text: 'Chart Doughnut'
+                }
+            }
+        },
         datasets: [
             {
                 label: 'Users Gains',
@@ -86,13 +107,13 @@ const ChartJSUser = () => {
             <Paper>
                 <Grid container spacing={2} justifyContent="center">
                     <Grid item xs={12} md={6}>
-                        <BarChart chartData={userDataBar} />
+                        <BarChart chartData={userDataBar} chartOptions={userDataBar.options} />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <LineChart chartData={userDataLine} chartOptions={userDataLine.options} />
                     </Grid>
                     <Grid item xs={6}>
-                        <DoughnutChart chartData={userDataDoughnut} />
+                        <DoughnutChart chartData={userDataDoughnut} chartOptions={userDataDoughnut.options} />
                     </Grid>
                 </Grid>
             </Paper>

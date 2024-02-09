@@ -11,9 +11,6 @@ const viteConfig = defineViteConfig({
             include: '**/*.svg?react'
         })
     ]
-    // build: {
-    //     chunkSizeWarningLimit: 1100
-    // }
 });
 
 const vitestConfig = {
