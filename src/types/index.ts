@@ -17,3 +17,6 @@ export type { SeatActionTypes } from './SeatsTypes';
 export type { TrendingMoviesActionTypes } from './MoviesTypes';
 export type { TodosListProps } from './TodosListTypes';
 export type { timeWindowType, ParamsType } from './apiMovieTypes';
+export type { LineChartProps } from './ChartJS/LineChartTypes';
+export type { BarChartProps } from './ChartJS/BarChartTypes';
+export type { DoughnutChartProps } from './ChartJS/DoughnutChartTypes';

@@ -23,6 +23,9 @@ const Layout = ({ selectedDate }: LayoutProps) => (
                     <Link to="/todos">
                         <Button>GraphQL</Button>
                     </Link>
+                    <Link to="/chart">
+                        <Button>ChartJS</Button>
+                    </Link>
 
                     <SelectDate selectedDate={selectedDate} />
                 </ToolbarStyled>

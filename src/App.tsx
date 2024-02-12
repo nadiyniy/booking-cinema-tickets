@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { SessionList, PageLoader, Layout, ModalSeatList, Home, TrendingMovies, Todos } from './components';
 
 import { selectDate, selectIsLoading } from './redux/ducks/sessions.js';
+import ChartJS from './components/ChartJSUser';
 
 function App() {
     const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/session_details" element={<ModalSeatList open={open} setOpen={setOpen} />} />
                 <Route path="/movies" element={<TrendingMovies />} />
                 <Route path="/todos" element={<Todos />} />
+                <Route path="/chart" element={<ChartJS />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
